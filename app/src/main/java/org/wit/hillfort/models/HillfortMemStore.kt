@@ -23,13 +23,15 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     logAll()
   }
 
-  override fun update(hiillfort: HillfortModel) {
-    var foundHillfort: HillfortModel? = hillforts.find { p -> p.id == hiillfort.id }
+  override fun update(hillfort: HillfortModel) {
+    var foundHillfort: HillfortModel? = hillforts.find { p -> p.id == hillfort.id }
     if (foundHillfort != null) {
-      foundHillfort.title = hiillfort.title
-      foundHillfort.description = hiillfort.description
-      foundHillfort.image = hiillfort.image
-
+      foundHillfort.title = hillfort.title
+      foundHillfort.description = hillfort.description
+      foundHillfort.image = hillfort.image
+      foundHillfort.lat = hillfort.lat
+      foundHillfort.lng = hillfort.lng
+      foundHillfort.zoom = hillfort.zoom
       logAll()
     }
   }
