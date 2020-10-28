@@ -52,6 +52,11 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     }
   }
 
+  override fun delete(hillfort: HillfortModel) {
+    hillforts.remove(hillfort)
+    serialize()
+  }
+
   private fun serialize() {
     val jsonString = gsonBuilder.toJson(hillforts, listType)
     write(context, JSON_FILE, jsonString)

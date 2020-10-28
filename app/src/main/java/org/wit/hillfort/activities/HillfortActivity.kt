@@ -83,12 +83,20 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
+    val item: MenuItem = menu.findItem(R.id.item_delete)
+    if (!intent.hasExtra("hillfort_edit")) {
+      item.setVisible(false)
+    }
     return super.onCreateOptionsMenu(menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
       R.id.item_cancel -> {
+        finish()
+      }
+      R.id.item_delete -> {
+        app.hillforts.delete(hillfort)
         finish()
       }
     }
