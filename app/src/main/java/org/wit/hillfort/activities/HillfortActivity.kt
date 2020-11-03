@@ -1,5 +1,6 @@
 package org.wit.hillfort.activities
 
+import android.content.ClipData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   lateinit var app : MainApp
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
+  val MULTIPLE_IMAGE_REQUEST = 3
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -68,7 +70,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     chooseImage.setOnClickListener {
 //      showImagePicker(this, IMAGE_REQUEST)
-      showMultipleImagesPicker(this, IMAGE_REQUEST)
+      showMultipleImagesPicker(this, MULTIPLE_IMAGE_REQUEST)
     }
 
     hillfortLocation.setOnClickListener {
@@ -112,6 +114,23 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           hillfort.image = data.getData().toString()
           hillfortImage.setImageBitmap(readImage(this, resultCode, data))
           chooseImage.setText(R.string.change_hillfort_image)
+        }
+      }
+      MULTIPLE_IMAGE_REQUEST -> {
+        if (data != null) {
+          info("is there data?")
+          info(data.clipData)
+          var clipData: ClipData = data.clipData!!
+          var clipArray: MutableList<String> = ArrayList()
+          var index = 0
+          while (index < clipData.itemCount) {
+            clipArray.add(clipData.getItemAt(index).uri.toString())
+            index++
+          }
+          info(clipArray)
+//          hillfort.image = data.getData().toString()
+//          hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+//          chooseImage.setText(R.string.change_hillfort_image)
         }
       }
       LOCATION_REQUEST -> {
