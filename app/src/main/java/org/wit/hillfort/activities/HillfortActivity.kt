@@ -14,6 +14,7 @@ import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImage
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.helpers.showImagePicker
+import org.wit.hillfort.helpers.showMultipleImagesPicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
@@ -66,7 +67,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     }
 
     chooseImage.setOnClickListener {
-      showImagePicker(this, IMAGE_REQUEST)
+//      showImagePicker(this, IMAGE_REQUEST)
+      showMultipleImagesPicker(this, IMAGE_REQUEST)
     }
 
     hillfortLocation.setOnClickListener {

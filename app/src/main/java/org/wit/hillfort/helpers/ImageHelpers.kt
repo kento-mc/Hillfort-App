@@ -19,6 +19,16 @@ fun showImagePicker(parent: Activity, id: Int) {
   parent.startActivityForResult(chooser, id)
 }
 
+fun showMultipleImagesPicker(parent: Activity, id: Int) {
+  val intent = Intent()
+  intent.type = "image/*"
+  intent.action = Intent.ACTION_OPEN_DOCUMENT
+  intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+  intent.addCategory(Intent.CATEGORY_OPENABLE)
+  val chooser = Intent.createChooser(intent, R.string.select_hillfort_image.toString())
+  parent.startActivityForResult(chooser, id)
+}
+
 fun readImage(activity: Activity, resultCode: Int, data: Intent?): Bitmap? {
   var bitmap: Bitmap? = null
   if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
