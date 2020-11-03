@@ -27,7 +27,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name of the Application"
+            android:text="@string/app_name"
             android:textSize="20dp"
             android:textStyle="bold"
             android:gravity="center"
@@ -52,11 +52,12 @@
             android:gravity="center"
             android:layout_marginTop="200dp"
             android:padding="15dp"
-            android:text="Designed by Your Name Here"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            />
 
     </LinearLayout>
 
