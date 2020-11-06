@@ -131,10 +131,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       }
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
-//          info("is there data?")
-//          info(data)
-//          info(data.data)
-//          info(data.clipData)
           if (data.data != null) {
             hillfort.image = data.getData().toString()
             hillfortImage.setImageBitmap(readImage(this, resultCode, data, null))
@@ -164,9 +160,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
               i++
             }
             info(clipArray)
-//          hillfort.image = data.getData().toString()
-//          hillfortImage.setImageBitmap(readImage(this, resultCode, data))
-//          chooseImage.setText(R.string.change_hillfort_image)
           }
         }
       }
