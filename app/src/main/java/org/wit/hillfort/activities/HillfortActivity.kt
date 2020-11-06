@@ -27,6 +27,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
   val MULTIPLE_IMAGE_REQUEST = 3
+  val IMAGE_CHANGE_2 = 4
+  val IMAGE_CHANGE_3 = 5
+  val IMAGE_CHANGE_4 = 6
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -46,15 +49,17 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       description.setText(hillfort.description)
       btnAdd.setText(R.string.save_hillfort)
       hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+      val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
       var i = 0
       while ( i < hillfort.images.size) {
-        if (i == 0) {
-          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-        } else if (i == 1) {
-          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-        } else if (i == 2) {
-          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-        }
+//        if (i == 0) {
+//          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        } else if (i == 1) {
+//          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        } else if (i == 2) {
+//          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        }
+        imageVars[i+1].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
         i++
       }
       if (hillfort.image != null) {
@@ -84,6 +89,22 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     chooseImage.setOnClickListener {
 //      showImagePicker(this, IMAGE_REQUEST)
       showMultipleImagesPicker(this, MULTIPLE_IMAGE_REQUEST)
+    }
+
+    hillfortImage.setOnClickListener {
+      showImagePicker(this, IMAGE_REQUEST)
+    }
+
+    hillfortImage2.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_2)
+    }
+
+    hillfortImage3.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_3)
+    }
+
+    hillfortImage4.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_4)
     }
 
     hillfortLocation.setOnClickListener {
@@ -129,6 +150,24 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           chooseImage.setText(R.string.change_hillfort_image)
         }
       }
+      IMAGE_CHANGE_2 -> {
+        if (data != null) {
+          hillfort.images[0] = data.getData().toString()
+          hillfortImage2.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
+      IMAGE_CHANGE_3 -> {
+        if (data != null) {
+          hillfort.images[1] = data.getData().toString()
+          hillfortImage3.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
+      IMAGE_CHANGE_4 -> {
+        if (data != null) {
+          hillfort.images[2] = data.getData().toString()
+          hillfortImage4.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
           if (data.data != null) {
@@ -148,14 +187,20 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 hillfort.images.add(image)
               }
             }
+            val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
             i = 0
             while (i < hillfort.images.size) {
-              if (i == 0) {
-                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
-              } else if (i == 1) {
-                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
-              } else if (i == 2) {
-                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
+//              if (i == 0) {
+//                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
+//              } else if (i == 1) {
+//                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
+//              } else if (i == 2) {
+//                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
+//              }
+              if (hillfortImage.drawable == null) { // Check if hillfortImage is already set
+                imageVars[i].setImageBitmap(readImage(this, resultCode, data, i))
+              } else {
+                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i+1))
               }
               i++
             }
