@@ -76,7 +76,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       }
       info("add Button Pressed: $hillfortTitle")
       setResult(AppCompatActivity.RESULT_OK)
-      finish()
+      if (hillfort.title.isNotEmpty()) {
+        finish()
+      }
     }
 
     chooseImage.setOnClickListener {
