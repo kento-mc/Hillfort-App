@@ -111,6 +111,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     when (requestCode) {
       IMAGE_REQUEST -> {
         if (data != null) {
+          info(data)
           hillfort.image = data.getData().toString()
           hillfortImage.setImageBitmap(readImage(this, resultCode, data))
           chooseImage.setText(R.string.change_hillfort_image)
@@ -119,13 +120,25 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
           info("is there data?")
+          info(data)
+          info(data.data)
           info(data.clipData)
           var clipData: ClipData = data.clipData!!
           var clipArray: MutableList<String> = ArrayList()
-          var index = 0
-          while (index < clipData.itemCount) {
-            clipArray.add(clipData.getItemAt(index).uri.toString())
-            index++
+          var i = 0
+          while (i < clipData.itemCount) {
+            clipArray.add(clipData.getItemAt(i).uri.toString())
+            i++
+          }
+          if (clipArray.size > 0) {
+            for (image in clipArray) {
+              hillfort.images.add(image)
+            }
+          }
+          i = 0
+          while (i < hillfort.images.size) {
+            hillfortImage2.setImageBitmap(readImage(this, resultCode, data))
+            i++
           }
           info(clipArray)
 //          hillfort.image = data.getData().toString()
