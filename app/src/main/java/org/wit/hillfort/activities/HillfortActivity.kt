@@ -46,6 +46,17 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       description.setText(hillfort.description)
       btnAdd.setText(R.string.save_hillfort)
       hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+      var i = 0
+      while ( i < hillfort.images.size) {
+        if (i == 0) {
+          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+        } else if (i == 1) {
+          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+        } else if (i == 2) {
+          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+        }
+        i++
+      }
       if (hillfort.image != null) {
         chooseImage.setText(R.string.change_hillfort_image)
       }
@@ -111,39 +122,50 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     when (requestCode) {
       IMAGE_REQUEST -> {
         if (data != null) {
-          info(data)
           hillfort.image = data.getData().toString()
-          hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+          hillfortImage.setImageBitmap(readImage(this, resultCode, data, null))
           chooseImage.setText(R.string.change_hillfort_image)
         }
       }
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
-          info("is there data?")
-          info(data)
-          info(data.data)
-          info(data.clipData)
-          var clipData: ClipData = data.clipData!!
-          var clipArray: MutableList<String> = ArrayList()
-          var i = 0
-          while (i < clipData.itemCount) {
-            clipArray.add(clipData.getItemAt(i).uri.toString())
-            i++
-          }
-          if (clipArray.size > 0) {
-            for (image in clipArray) {
-              hillfort.images.add(image)
+//          info("is there data?")
+//          info(data)
+//          info(data.data)
+//          info(data.clipData)
+          if (data.data != null) {
+            hillfort.image = data.getData().toString()
+            hillfortImage.setImageBitmap(readImage(this, resultCode, data, null))
+            chooseImage.setText(R.string.change_hillfort_image)
+          } else {
+            var clipData: ClipData = data.clipData!!
+            var clipArray: MutableList<String> = ArrayList()
+            var i = 0
+            while (i < clipData.itemCount) {
+              clipArray.add(clipData.getItemAt(i).uri.toString())
+              i++
             }
-          }
-          i = 0
-          while (i < hillfort.images.size) {
-            hillfortImage2.setImageBitmap(readImage(this, resultCode, data))
-            i++
-          }
-          info(clipArray)
+            if (clipArray.size > 0) {
+              for (image in clipArray) {
+                hillfort.images.add(image)
+              }
+            }
+            i = 0
+            while (i < hillfort.images.size) {
+              if (i == 0) {
+                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
+              } else if (i == 1) {
+                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
+              } else if (i == 2) {
+                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
+              }
+              i++
+            }
+            info(clipArray)
 //          hillfort.image = data.getData().toString()
 //          hillfortImage.setImageBitmap(readImage(this, resultCode, data))
 //          chooseImage.setText(R.string.change_hillfort_image)
+          }
         }
       }
       LOCATION_REQUEST -> {

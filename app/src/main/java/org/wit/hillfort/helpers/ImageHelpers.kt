@@ -1,6 +1,7 @@
 package org.wit.hillfort.helpers
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -29,13 +30,22 @@ fun showMultipleImagesPicker(parent: Activity, id: Int) {
   parent.startActivityForResult(chooser, id)
 }
 
-fun readImage(activity: Activity, resultCode: Int, data: Intent?): Bitmap? {
+fun readImage(activity: Activity, resultCode: Int, data: Intent?, multiIndex: Int?): Bitmap? {
   var bitmap: Bitmap? = null
-  if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-    try {
-      bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, data.data)
-    } catch (e: IOException) {
-      e.printStackTrace()
+  if (resultCode == Activity.RESULT_OK && data != null) {
+    if (multiIndex == null && data.data != null) {
+      try {
+        bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, data.data)
+      } catch (e: IOException) {
+        e.printStackTrace()
+      }
+    } else if (multiIndex != null && data.clipData != null) {
+      try {
+        var clipData: ClipData = data.clipData!!
+        bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, clipData.getItemAt(multiIndex).uri)
+      } catch (e: IOException) {
+        e.printStackTrace()
+      }
     }
   }
   return bitmap
