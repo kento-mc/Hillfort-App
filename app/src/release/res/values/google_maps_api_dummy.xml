@@ -1,0 +1,6 @@
+<resources>
+    <!--
+      Remove '_dummy' from string name below
+      -->
+    <string name="google_maps_key_dummy" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE</string>
+</resources>
