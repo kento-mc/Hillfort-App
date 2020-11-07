@@ -9,6 +9,7 @@ import org.wit.hillfort.helpers.*
 import java.util.*
 
 val JSON_FILE = "hillforts.json"
+val jSON_USER_FILE = "users.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<java.util.ArrayList<HillfortModel>>() {}.type
 
@@ -20,6 +21,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
   val context: Context
   var hillforts = mutableListOf<HillfortModel>()
+  var users = mutableListOf<UserModel>()
 
   constructor (context: Context) {
     this.context = context
