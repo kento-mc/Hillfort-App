@@ -1,5 +1,6 @@
 package org.wit.hillfort.activities
 
+import android.content.ClipData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImage
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.helpers.showImagePicker
+import org.wit.hillfort.helpers.showMultipleImagesPicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
@@ -24,6 +26,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   lateinit var app : MainApp
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
+  val MULTIPLE_IMAGE_REQUEST = 3
+  val IMAGE_CHANGE_2 = 4
+  val IMAGE_CHANGE_3 = 5
+  val IMAGE_CHANGE_4 = 6
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,6 +49,19 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       description.setText(hillfort.description)
       btnAdd.setText(R.string.save_hillfort)
       hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+      val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
+      var i = 0
+      while ( i < hillfort.images.size) {
+//        if (i == 0) {
+//          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        } else if (i == 1) {
+//          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        } else if (i == 2) {
+//          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
+//        }
+        imageVars[i+1].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
+        i++
+      }
       if (hillfort.image != null) {
         chooseImage.setText(R.string.change_hillfort_image)
       }
@@ -62,11 +81,30 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       }
       info("add Button Pressed: $hillfortTitle")
       setResult(AppCompatActivity.RESULT_OK)
-      finish()
+      if (hillfort.title.isNotEmpty()) {
+        finish()
+      }
     }
 
     chooseImage.setOnClickListener {
+//      showImagePicker(this, IMAGE_REQUEST)
+      showMultipleImagesPicker(this, MULTIPLE_IMAGE_REQUEST)
+    }
+
+    hillfortImage.setOnClickListener {
       showImagePicker(this, IMAGE_REQUEST)
+    }
+
+    hillfortImage2.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_2)
+    }
+
+    hillfortImage3.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_3)
+    }
+
+    hillfortImage4.setOnClickListener {
+      showImagePicker(this, IMAGE_CHANGE_4)
     }
 
     hillfortLocation.setOnClickListener {
@@ -108,8 +146,66 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       IMAGE_REQUEST -> {
         if (data != null) {
           hillfort.image = data.getData().toString()
-          hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+          hillfortImage.setImageBitmap(readImage(this, resultCode, data, null))
           chooseImage.setText(R.string.change_hillfort_image)
+        }
+      }
+      IMAGE_CHANGE_2 -> {
+        if (data != null) {
+          hillfort.images[0] = data.getData().toString()
+          hillfortImage2.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
+      IMAGE_CHANGE_3 -> {
+        if (data != null) {
+          hillfort.images[1] = data.getData().toString()
+          hillfortImage3.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
+      IMAGE_CHANGE_4 -> {
+        if (data != null) {
+          hillfort.images[2] = data.getData().toString()
+          hillfortImage4.setImageBitmap(readImage(this, resultCode, data, null))
+        }
+      }
+      MULTIPLE_IMAGE_REQUEST -> {
+        if (data != null) {
+          if (data.data != null) {
+            hillfort.image = data.getData().toString()
+            hillfortImage.setImageBitmap(readImage(this, resultCode, data, null))
+            chooseImage.setText(R.string.change_hillfort_image)
+          } else {
+            var clipData: ClipData = data.clipData!!
+            var clipArray: MutableList<String> = ArrayList()
+            var i = 0
+            while (i < clipData.itemCount) {
+              clipArray.add(clipData.getItemAt(i).uri.toString())
+              i++
+            }
+            if (clipArray.size > 0) {
+              for (image in clipArray) {
+                hillfort.images.add(image)
+              }
+            }
+            val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
+            i = 0
+            while (i < hillfort.images.size) {
+//              if (i == 0) {
+//                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
+//              } else if (i == 1) {
+//                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
+//              } else if (i == 2) {
+//                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
+//              }
+              if (hillfortImage.drawable == null) { // Check if hillfortImage is already set
+                imageVars[i].setImageBitmap(readImage(this, resultCode, data, i))
+              } else {
+                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i+1))
+              }
+              i++
+            }
+            info(clipArray)
+          }
         }
       }
       LOCATION_REQUEST -> {
