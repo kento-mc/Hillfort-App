@@ -130,10 +130,16 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
+
+    // Show user in menu bar
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
     menuUser.setTitle(loggedInUser?.userName)
+
+    // Set checkmark status
     val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
     if (hillfort.isVisited) menuCheck.setChecked(true)
+
+    // Hide delete option on first creation of hillfort
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!intent.hasExtra("hillfort_edit")) {
       item.setVisible(false)
