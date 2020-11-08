@@ -20,7 +20,7 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
 
   var user = UserModel()
   lateinit var app : MainApp
-  lateinit var loggedInUser : UserModel
+  var loggedInUser : UserModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -42,6 +42,7 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
           loggedInUser = app.users.findOneByEmail(user)!!
         } else {
           toast(R.string.user_exists)
+          startActivity(intentFor<SignupActivity>())
         }
       }
       if (loggedInUser != null) {
@@ -51,7 +52,6 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
       } else {
         toast(R.string.enter_user_email_password)
       }
-      startActivity(intentFor<SignupActivity>())
     }
 
     loginLink.setOnClickListener() {

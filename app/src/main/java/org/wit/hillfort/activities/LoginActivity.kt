@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
 
   var user = UserModel()
   lateinit var app : MainApp
-  lateinit var loggedInUser : UserModel
+  var loggedInUser : UserModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
