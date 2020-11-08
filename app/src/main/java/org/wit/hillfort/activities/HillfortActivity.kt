@@ -120,7 +120,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.menu_hillfort, menu)
+//    menuInflater.inflate(R.menu.menu_hillfort, menu)
+//    val menuUser: MenuItem = menu.findItem(R.id.menu_user)
+//    menuUser.setTitle(app.loggedInUser.userName)
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!intent.hasExtra("hillfort_edit")) {
       item.setVisible(false)

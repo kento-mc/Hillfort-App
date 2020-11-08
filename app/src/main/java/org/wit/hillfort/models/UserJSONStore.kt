@@ -21,13 +21,20 @@ class UserJSONStore : UserStore, AnkoLogger {
 
   constructor (context: Context) {
     this.context = context
-    if (exists(context, JSON_FILE)) {
+    if (exists(context, JSON_USER_FILE)) {
       deserialize()
     }
   }
 
   override fun findAll(): MutableList<UserModel> {
     return users
+  }
+
+  override fun findOne(user: UserModel): UserModel? {
+    var foundUser: UserModel? = users.find { p -> p.id == user.id }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
   }
 
   override fun create(user: UserModel) {
@@ -50,6 +57,16 @@ class UserJSONStore : UserStore, AnkoLogger {
   override fun delete(user: UserModel) {
     users.remove(user)
     serialize()
+  }
+
+  override fun validate(user: UserModel): UserModel? {
+    var foundUser: UserModel? = users.find { p ->
+      p.email == user.email
+      p.password == p.password
+    }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
   }
 
   private fun serialize() {

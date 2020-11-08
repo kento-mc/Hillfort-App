@@ -17,6 +17,13 @@ class UserMemStore : UserStore, AnkoLogger {
     return users
   }
 
+  override fun findOne(user: UserModel): UserModel? {
+    var foundUser: UserModel? = users.find { p -> p.id == user.id }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
+  }
+
   override fun create(user: UserModel) {
     user.id = getUserId()
     users.add(user)
@@ -35,6 +42,13 @@ class UserMemStore : UserStore, AnkoLogger {
 
   override fun delete(user: UserModel) {
     users.remove(user)
+  }
+
+  override fun validate(user: UserModel): UserModel? {
+    var foundUser: UserModel? = users.find { p -> p.id == user.id }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
   }
 
   fun logAll() {
