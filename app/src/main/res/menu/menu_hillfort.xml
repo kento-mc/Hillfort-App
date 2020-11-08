@@ -15,7 +15,8 @@
     <item
         android:id="@+id/item_mark_visited"
         android:title="@string/menu_markVisited"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        android:checkable="true" />
 
     <item
         android:id="@+id/item_delete"

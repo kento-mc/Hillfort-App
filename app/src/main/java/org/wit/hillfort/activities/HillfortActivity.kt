@@ -152,6 +152,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         loggedInUser = null
         startActivity(intentFor<LoginActivity>())
       }
+      R.id.item_mark_visited -> {
+        if (item.isChecked) {
+          item.setChecked(false)
+          hillfort.isVisited = false
+        } else {
+          item.setChecked(true)
+          hillfort.isVisited = true
+        }
+      }
     }
     return super.onOptionsItemSelected(item)
   }
