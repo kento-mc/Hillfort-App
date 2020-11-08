@@ -25,6 +25,8 @@
             android:name=".activities.HillfortActivity"
             android:parentActivityName=".activities.HillfortListActivity" />
         <activity android:name=".activities.HillfortListActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

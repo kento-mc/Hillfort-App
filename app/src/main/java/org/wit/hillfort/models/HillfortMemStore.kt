@@ -17,6 +17,10 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     return hillforts
   }
 
+  override fun findAllByUser(user: UserModel): List<HillfortModel> {
+    return hillforts.filter { it.contributor == user.id }
+  }
+
   override fun create(hillfort: HillfortModel) {
     hillfort.id = getId()
     hillforts.add(hillfort)
@@ -28,6 +32,7 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     if (foundHillfort != null) {
       foundHillfort.title = hillfort.title
       foundHillfort.description = hillfort.description
+      foundHillfort.contributor = hillfort.contributor
       foundHillfort.image = hillfort.image
       foundHillfort.images = hillfort.images
       foundHillfort.lat = hillfort.lat

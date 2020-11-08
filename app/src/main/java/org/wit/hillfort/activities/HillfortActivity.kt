@@ -19,11 +19,13 @@ import org.wit.hillfort.helpers.showMultipleImagesPicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
+import org.wit.hillfort.models.UserModel
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   var hillfort = HillfortModel()
   lateinit var app : MainApp
+  var loggedInUser : UserModel? = null
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
   val MULTIPLE_IMAGE_REQUEST = 3
@@ -40,6 +42,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     info("Hillfort Activity started..")
 
     app = application as MainApp
+
+    if (intent.hasExtra("loggedInUser")) {
+      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
+      info("User:")
+      info(loggedInUser)
+    }
 
     var edit = false
 
@@ -71,6 +79,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
+      hillfort.contributor = loggedInUser?.id!!
       if (hillfort.title.isEmpty()) {
         toast(R.string.enter_hillfort_title)
       } else {
@@ -121,6 +130,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
+    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+    menuUser.setTitle(loggedInUser?.userName)
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!intent.hasExtra("hillfort_edit")) {
       item.setVisible(false)
@@ -136,6 +147,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       R.id.item_delete -> {
         app.hillforts.delete(hillfort)
         finish()
+      }
+      R.id.item_logout -> {
+        loggedInUser = null
+        startActivity(intentFor<LoginActivity>())
       }
     }
     return super.onOptionsItemSelected(item)
