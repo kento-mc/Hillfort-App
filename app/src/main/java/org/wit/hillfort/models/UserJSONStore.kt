@@ -56,7 +56,7 @@ class UserJSONStore : UserStore, AnkoLogger {
 
 
   override fun update(user: UserModel) {
-    var foundUser: UserModel? = users.find { p -> p.id == user.id }
+    var foundUser: UserModel? = users.find { p -> p.email == user.email }
     if (foundUser != null) {
       foundUser.email = user.email
       foundUser.password = user.password

@@ -1,6 +1,7 @@
 package org.wit.hillfort.activities
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -45,12 +46,25 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
     password.setText(loggedInUser?.password)
 
     btnUpdate.setOnClickListener() {
-      user.userName = userName.text.toString()
-      user.email = userEmail.text.toString()
-      user.password = password.text.toString()
+      loggedInUser?.userName = userName.text.toString()
+      loggedInUser?.email = userEmail.text.toString()
+      loggedInUser?.password = password.text.toString()
 
-      app.users.update(user.copy())
+      app.users.update(loggedInUser?.copy()!!)
       finish()
     }
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item?.itemId) {
+      R.id.item_cancel -> {
+        finish()
+      }
+      R.id.item_logout -> {
+        loggedInUser = null
+        startActivity(intentFor<LoginActivity>())
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 }

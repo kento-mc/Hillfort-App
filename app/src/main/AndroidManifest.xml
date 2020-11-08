@@ -17,7 +17,6 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
-        <!-- <activity android:name=".activities.SplashActivity"></activity> -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

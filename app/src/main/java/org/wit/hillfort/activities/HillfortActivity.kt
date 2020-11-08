@@ -61,13 +61,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
       var i = 0
       while ( i < hillfort.images.size) {
-//        if (i == 0) {
-//          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        } else if (i == 1) {
-//          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        } else if (i == 2) {
-//          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        }
         imageVars[i+1].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
         i++
       }
@@ -215,13 +208,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
             i = 0
             while (i < hillfort.images.size) {
-//              if (i == 0) {
-//                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
-//              } else if (i == 1) {
-//                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
-//              } else if (i == 2) {
-//                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
-//              }
               if (hillfortImage.drawable == null) { // Check if hillfortImage is already set
                 imageVars[i].setImageBitmap(readImage(this, resultCode, data, i))
               } else {
