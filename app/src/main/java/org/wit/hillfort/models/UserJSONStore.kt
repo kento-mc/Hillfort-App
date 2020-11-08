@@ -37,6 +37,13 @@ class UserJSONStore : UserStore, AnkoLogger {
     } else return null
   }
 
+  override fun findOneByEmail(user: UserModel): UserModel? {
+    var foundUser: UserModel? = users.find { p -> p.email == user.email }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
+  }
+
   override fun create(user: UserModel) {
     user.id = generateRandomId()
     users.add(user)
@@ -62,9 +69,8 @@ class UserJSONStore : UserStore, AnkoLogger {
   override fun validate(user: UserModel): UserModel? {
     var foundUser: UserModel? = users.find { p ->
       p.email == user.email
-      p.password == p.password
     }
-    if (foundUser != null) {
+    if (foundUser != null && user.password == foundUser.password) {
       return foundUser
     } else return null
   }

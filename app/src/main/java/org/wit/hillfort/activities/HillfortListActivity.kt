@@ -27,6 +27,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
     if (intent.hasExtra("loggedInUser")) {
       loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
+      info("User:")
       info(loggedInUser)
     }
 

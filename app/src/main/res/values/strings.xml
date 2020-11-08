@@ -17,9 +17,14 @@
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">Map</string>
     <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
     <string name="hint_userEmail">Email</string>
     <string name="hint_userPassword">Password </string>
+    <string name="hint_userName">User Name </string>
     <string name="enter_email_password"> Please enter a valid email address/password </string>
+    <string name="enter_user_email_password"> Please enter a user name and valid email address/password </string>
     <string name="no_account">No account? </string>
     <string name="create_account">Create one! </string>
+    <string name="already_registered">Already registered? </string>
+    <string name="login">Log in! </string>
 </resources>
