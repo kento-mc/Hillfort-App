@@ -20,6 +20,9 @@ import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
@@ -39,6 +42,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd G")
+    val currentDate: String = simpleDateFormat.format(Date())
+
     info("Hillfort Activity started..")
 
     app = application as MainApp
@@ -125,6 +131,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
     menuUser.setTitle(loggedInUser?.userName)
+    val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
+    if (hillfort.isVisited) menuCheck.setChecked(true)
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!intent.hasExtra("hillfort_edit")) {
       item.setVisible(false)
@@ -146,7 +154,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         startActivity(intentFor<LoginActivity>())
       }
       R.id.item_mark_visited -> {
-        if (item.isChecked) {
+        if (hillfort.isVisited) {
           item.setChecked(false)
           hillfort.isVisited = false
         } else {
