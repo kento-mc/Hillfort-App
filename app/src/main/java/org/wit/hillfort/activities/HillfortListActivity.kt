@@ -50,8 +50,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
-//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-//    menuUser.setTitle(loggedInUser.userName)
+    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+    menuUser.setTitle(loggedInUser.userName)
 
     return super.onCreateOptionsMenu(menu)
   }
@@ -64,6 +64,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
+    intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser)
     startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
   }
 

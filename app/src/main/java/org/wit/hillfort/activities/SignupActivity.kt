@@ -42,7 +42,6 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
           loggedInUser = app.users.findOneByEmail(user)!!
         } else {
           toast(R.string.user_exists)
-          startActivity(intentFor<SignupActivity>())
         }
       }
       if (loggedInUser != null) {
