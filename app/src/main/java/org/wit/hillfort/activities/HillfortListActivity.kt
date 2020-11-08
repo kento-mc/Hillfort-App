@@ -18,7 +18,7 @@ import org.wit.hillfort.models.UserModel
 class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   lateinit var app: MainApp
-  lateinit var loggedInUser: UserModel
+  var loggedInUser: UserModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(loggedInUser.userName)
+    menuUser.setTitle(loggedInUser?.userName)
 
     return super.onCreateOptionsMenu(menu)
   }
@@ -59,6 +59,10 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
       R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+      R.id.item_logout -> {
+        loggedInUser = null
+        startActivity(intentFor<LoginActivity>())
+      }
     }
     return super.onOptionsItemSelected(item)
   }
