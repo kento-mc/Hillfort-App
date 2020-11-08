@@ -79,6 +79,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
+      hillfort.contributor = loggedInUser?.id!!
       if (hillfort.title.isEmpty()) {
         toast(R.string.enter_hillfort_title)
       } else {
@@ -146,6 +147,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       R.id.item_delete -> {
         app.hillforts.delete(hillfort)
         finish()
+      }
+      R.id.item_logout -> {
+        loggedInUser = null
+        startActivity(intentFor<LoginActivity>())
       }
     }
     return super.onOptionsItemSelected(item)

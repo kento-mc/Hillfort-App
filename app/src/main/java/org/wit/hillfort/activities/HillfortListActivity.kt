@@ -36,11 +36,11 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    loadHillforts()
+    loadHillforts(loggedInUser!!)
   }
 
-  private fun loadHillforts() {
-    showHillforts(app.hillforts.findAll())
+  private fun loadHillforts(user: UserModel) {
+    showHillforts(app.hillforts.findAllByUser(user))
   }
 
   fun showHillforts (hillforts: List<HillfortModel>) {
@@ -58,7 +58,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+      R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser), 0)
       R.id.item_logout -> {
         loggedInUser = null
         startActivity(intentFor<LoginActivity>())
@@ -68,12 +68,13 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser)
-    startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
+    var intent = intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser)
+    intent.putExtra("hillfort_edit", hillfort)
+    startActivityForResult(intent, 0)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    recyclerView.adapter?.notifyDataSetChanged()
+    loadHillforts(loggedInUser!!)
     super.onActivityResult(requestCode, resultCode, data)
   }
 }
