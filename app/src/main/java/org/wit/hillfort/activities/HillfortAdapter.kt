@@ -43,7 +43,7 @@ class HillfortAdapter constructor(
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       if (hillfort.isVisited) {
-        itemView.isVisited.text = "Visited"
+        itemView.isVisited.text = "Visited on\n" + hillfort.dateVisited
       }
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
       itemView.setOnClickListener { listener.onHillfortClick(hillfort)}

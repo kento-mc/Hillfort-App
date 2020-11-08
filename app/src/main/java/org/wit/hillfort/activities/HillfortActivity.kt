@@ -29,6 +29,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   var hillfort = HillfortModel()
   lateinit var app : MainApp
   var loggedInUser : UserModel? = null
+  var currentDate: String = ""
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
   val MULTIPLE_IMAGE_REQUEST = 3
@@ -42,8 +43,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd G")
-    val currentDate: String = simpleDateFormat.format(Date())
+    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+    currentDate = simpleDateFormat.format(Date())
 
     info("Hillfort Activity started..")
 
@@ -160,6 +161,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         } else {
           item.setChecked(true)
           hillfort.isVisited = true
+          hillfort.dateVisited = currentDate
         }
       }
     }
