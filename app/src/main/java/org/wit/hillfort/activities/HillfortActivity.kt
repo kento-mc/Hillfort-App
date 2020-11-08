@@ -225,7 +225,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
               if (hillfortImage.drawable == null) { // Check if hillfortImage is already set
                 imageVars[i].setImageBitmap(readImage(this, resultCode, data, i))
               } else {
-                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i+1))
+                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i))
               }
               i++
             }
