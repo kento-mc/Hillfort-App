@@ -13,18 +13,6 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/item_mark_visited"
-        android:title="@string/menu_markVisited"
-        app:showAsAction="never"
-        android:checkable="true" />
-
-    <item
-        android:id="@+id/item_delete"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/menu_deleteHillfort"
-        app:showAsAction="never"/>
-
-    <item
         android:id="@+id/item_logout"
         android:title="@string/menu_logout"
         app:showAsAction="never"/>

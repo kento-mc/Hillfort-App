@@ -8,6 +8,8 @@ import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)
@@ -40,6 +42,9 @@ class HillfortAdapter constructor(
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
+      if (hillfort.isVisited) {
+        itemView.isVisited.text = "Visited on\n" + hillfort.dateVisited
+      }
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
       itemView.setOnClickListener { listener.onHillfortClick(hillfort)}
     }

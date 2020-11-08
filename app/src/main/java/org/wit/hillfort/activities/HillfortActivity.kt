@@ -19,11 +19,17 @@ import org.wit.hillfort.helpers.showMultipleImagesPicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
+import org.wit.hillfort.models.UserModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   var hillfort = HillfortModel()
   lateinit var app : MainApp
+  var loggedInUser : UserModel? = null
+  var currentDate: String = ""
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
   val MULTIPLE_IMAGE_REQUEST = 3
@@ -37,9 +43,18 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+    currentDate = simpleDateFormat.format(Date())
+
     info("Hillfort Activity started..")
 
     app = application as MainApp
+
+    if (intent.hasExtra("loggedInUser")) {
+      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
+      info("User:")
+      info(loggedInUser)
+    }
 
     var edit = false
 
@@ -53,13 +68,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
       var i = 0
       while ( i < hillfort.images.size) {
-//        if (i == 0) {
-//          hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        } else if (i == 1) {
-//          hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        } else if (i == 2) {
-//          hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.images[i]))
-//        }
         imageVars[i+1].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
         i++
       }
@@ -71,6 +79,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
+      hillfort.contributor = loggedInUser?.id!!
       if (hillfort.title.isEmpty()) {
         toast(R.string.enter_hillfort_title)
       } else {
@@ -121,6 +130,16 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
+
+    // Show user in menu bar
+    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+    menuUser.setTitle(loggedInUser?.userName)
+
+    // Set checkmark status
+    val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
+    if (hillfort.isVisited) menuCheck.setChecked(true)
+
+    // Hide delete option on first creation of hillfort
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!intent.hasExtra("hillfort_edit")) {
       item.setVisible(false)
@@ -136,6 +155,20 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       R.id.item_delete -> {
         app.hillforts.delete(hillfort)
         finish()
+      }
+      R.id.item_logout -> {
+        loggedInUser = null
+        startActivity(intentFor<LoginActivity>())
+      }
+      R.id.item_mark_visited -> {
+        if (hillfort.isVisited) {
+          item.setChecked(false)
+          hillfort.isVisited = false
+        } else {
+          item.setChecked(true)
+          hillfort.isVisited = true
+          hillfort.dateVisited = currentDate
+        }
       }
     }
     return super.onOptionsItemSelected(item)
@@ -191,17 +224,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
             i = 0
             while (i < hillfort.images.size) {
-//              if (i == 0) {
-//                hillfortImage2.setImageBitmap(readImage(this, resultCode, data, i))
-//              } else if (i == 1) {
-//                hillfortImage3.setImageBitmap(readImage(this, resultCode, data, i))
-//              } else if (i == 2) {
-//                hillfortImage4.setImageBitmap(readImage(this, resultCode, data, i))
-//              }
               if (hillfortImage.drawable == null) { // Check if hillfortImage is already set
                 imageVars[i].setImageBitmap(readImage(this, resultCode, data, i))
               } else {
-                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i+1))
+                imageVars[i+1].setImageBitmap(readImage(this, resultCode, data, i))
               }
               i++
             }

@@ -32,6 +32,10 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     return hillforts
   }
 
+  override fun findAllByUser(user: UserModel): MutableList<HillfortModel> {
+    return hillforts.filter { it.contributor == user.id }.toMutableList()
+  }
+
   override fun create(hillfort: HillfortModel) {
     hillfort.id = generateRandomId()
     hillforts.add(hillfort)
@@ -44,6 +48,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     if (foundHillfort != null) {
       foundHillfort.title = hillfort.title
       foundHillfort.description = hillfort.description
+      foundHillfort.contributor = hillfort.contributor
+      foundHillfort.isVisited = hillfort.isVisited
+      foundHillfort.dateVisited = hillfort.dateVisited
       foundHillfort.image = hillfort.image
       foundHillfort.images = hillfort.images
       foundHillfort.lat = hillfort.lat

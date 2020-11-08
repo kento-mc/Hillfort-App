@@ -5,7 +5,10 @@
     <string name="button_addHillfort">Add Hillfort</string>
     <string name="menu_addHillfort">Add</string>
     <string name="menu_cancelHillfort">Cancel</string>
-    <string name="menu_deleteHillfort">Delete</string>
+    <string name="menu_deleteHillfort">Delete Hillfort</string>
+    <string name="menu_markVisited">Visited</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_settings">Settings</string>
     <string name="enter_hillfort_title"> Please enter a Hillfort Title </string>
     <string name="save_hillfort"> Save Hillfort </string>
     <string name="button_addImage"> Add Image </string>
@@ -13,4 +16,26 @@
     <string name="change_hillfort_image">Add image(s) (up to 4)</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">Map</string>
+    <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
+    <string name="hint_userEmail">Email</string>
+    <string name="hint_userPassword">Password </string>
+    <string name="hint_userName">User Name </string>
+    <string name="enter_email_password"> Please enter a valid email address/password </string>
+    <string name="enter_user_email_password"> Please enter a user name and valid email address/password </string>
+    <string name="no_account">No account? </string>
+    <string name="create_account">Create one! </string>
+    <string name="already_registered">Already registered? </string>
+    <string name="login">Log in! </string>
+    <string name="user_exists">User with that email address already exists! </string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="settings_userName">User Name </string>
+    <string name="settings_email">Email address </string>
+    <string name="settings_password">Password </string>
+    <string name="settings_buttonUpdate">Update </string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>
