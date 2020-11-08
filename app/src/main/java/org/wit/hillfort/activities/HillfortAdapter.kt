@@ -8,6 +8,8 @@ import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)
