@@ -27,4 +27,5 @@
     <string name="create_account">Create one! </string>
     <string name="already_registered">Already registered? </string>
     <string name="login">Log in! </string>
+    <string name="user_exists">User with that email address already exists! </string>
 </resources>

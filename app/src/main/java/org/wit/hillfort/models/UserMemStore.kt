@@ -31,10 +31,14 @@ class UserMemStore : UserStore, AnkoLogger {
     } else return null
   }
 
-  override fun create(user: UserModel) {
-    user.id = getUserId()
-    users.add(user)
-    logAll()
+  override fun create(user: UserModel): Boolean {
+    var foundUser: UserModel? = users.find { p -> p.email == user.email }
+    if (foundUser == null) {
+      user.id = getUserId()
+      users.add(user)
+      logAll()
+      return true
+    } else return false
   }
 
   override fun update(user: UserModel) {

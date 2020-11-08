@@ -44,10 +44,14 @@ class UserJSONStore : UserStore, AnkoLogger {
     } else return null
   }
 
-  override fun create(user: UserModel) {
-    user.id = generateRandomId()
-    users.add(user)
-    serialize()
+  override fun create(user: UserModel): Boolean {
+    var foundUser: UserModel? = users.find { p -> p.email == user.email }
+    if (foundUser == null) {
+      user.id = generateRandomId()
+      users.add(user)
+      serialize()
+      return true
+    } else return false
   }
 
 

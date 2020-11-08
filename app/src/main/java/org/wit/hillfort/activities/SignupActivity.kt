@@ -38,9 +38,11 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
       if (user.userName.isEmpty() || user.email.isEmpty() || user.password.isEmpty()) {
         toast(R.string.enter_user_email_password)
       } else {
-        app.users.create(user.copy())!!
-        loggedInUser = app.users.findOneByEmail(user)!!
-
+        if (app.users.create(user.copy())!!) {
+          loggedInUser = app.users.findOneByEmail(user)!!
+        } else {
+          toast(R.string.user_exists)
+        }
       }
       if (loggedInUser != null) {
         setResult(AppCompatActivity.RESULT_OK)
@@ -49,6 +51,7 @@ class SignupActivity : AppCompatActivity(), AnkoLogger {
       } else {
         toast(R.string.enter_user_email_password)
       }
+      startActivity(intentFor<SignupActivity>())
     }
 
     loginLink.setOnClickListener() {
