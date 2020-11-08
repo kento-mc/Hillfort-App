@@ -20,4 +20,6 @@
     <string name="hint_userEmail">Email</string>
     <string name="hint_userPassword">Password </string>
     <string name="enter_email_password"> Please enter a valid email address/password </string>
+    <string name="no_account">No account? </string>
+    <string name="create_account">Create one! </string>
 </resources>
