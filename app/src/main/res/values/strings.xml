@@ -16,6 +16,7 @@
     <string name="change_hillfort_image">Add image(s) (up to 4)</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_hillfort_maps">Maps</string>
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
     <string name="hint_userEmail">Email</string>
@@ -33,9 +34,4 @@
     <string name="settings_email">Email address </string>
     <string name="settings_password">Password </string>
     <string name="settings_buttonUpdate">Update </string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
 </resources>

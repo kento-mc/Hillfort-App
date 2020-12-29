@@ -6,10 +6,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.*
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
@@ -59,6 +56,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
       R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser), 0)
+      R.id.item_map -> startActivity<HillfortMapsActivity>()
       R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
       R.id.item_logout -> {
         loggedInUser = null
