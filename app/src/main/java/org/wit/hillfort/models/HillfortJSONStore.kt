@@ -74,4 +74,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     val jsonString = read(context, JSON_FILE)
     hillforts = Gson().fromJson(jsonString, listType)
   }
+
+  override fun findById(id:Long) : HillfortModel? {
+    val foundHillfort: HillfortModel? = hillforts.find { it.id == id }
+    return foundHillfort
+  }
 }
