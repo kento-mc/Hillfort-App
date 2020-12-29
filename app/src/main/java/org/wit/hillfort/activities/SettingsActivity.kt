@@ -53,6 +53,11 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
       app.users.update(loggedInUser?.copy()!!)
       finish()
     }
+
+    val userNum: Int = app.hillforts.findAll().filter { it.contributor == loggedInUser?.id }.size
+    statsHillfortsNum.setText("Hillforts: $userNum")
+    val visitedNum: Int = app.hillforts.findAll().filter { it.isVisited }.size
+    statsHillfortsVisited.setText("Visited: $visitedNum")
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
