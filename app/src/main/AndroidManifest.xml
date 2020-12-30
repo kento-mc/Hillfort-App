@@ -24,12 +24,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.EditLocationView"
+            android:name=".views.location.EditLocationView"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".activities.HillfortView"
-            android:parentActivityName=".activities.HillfortListView" />
-        <activity android:name=".activities.HillfortListView" />
+            android:name=".views.hillfort.HillfortView"
+            android:parentActivityName=".views.hillfortlist.HillfortListView" />
+        <activity android:name=".views.hillfortlist.HillfortListView" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SignupActivity" />
         <activity

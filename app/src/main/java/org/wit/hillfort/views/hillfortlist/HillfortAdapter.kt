@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfortlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.models.UserModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)

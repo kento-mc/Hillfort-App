@@ -13,6 +13,7 @@ import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.hillfortlist.HillfortListView
 
 class SignupActivity : AppCompatActivity(), AnkoLogger {
 

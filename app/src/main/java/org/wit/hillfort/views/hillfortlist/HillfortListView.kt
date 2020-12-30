@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfortlist
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.*
 import org.wit.hillfort.R
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
 
-class HillfortListView : AppCompatActivity(), HillfortListener, AnkoLogger {
+class HillfortListView : AppCompatActivity(),
+  HillfortListener, AnkoLogger {
 
   lateinit var presenter: HillfortListPresenter
   var loggedInUser: UserModel? = null
@@ -34,7 +34,11 @@ class HillfortListView : AppCompatActivity(), HillfortListener, AnkoLogger {
     recyclerView.layoutManager = layoutManager
 //    loadHillforts(loggedInUser!!)
     recyclerView.adapter =
-      HillfortAdapter(presenter.getHillforts(loggedInUser!!), this)
+      HillfortAdapter(
+        presenter.getHillforts(
+          loggedInUser!!
+        ), this
+      )
     recyclerView.adapter?.notifyDataSetChanged()
   }
 

@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfort
 
 import android.content.ClipData
 import android.content.Intent
@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.wit.hillfort.R
+import org.wit.hillfort.views.location.EditLocationView
 import org.wit.hillfort.helpers.readImage
 import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.helpers.showMultipleImagesPicker
