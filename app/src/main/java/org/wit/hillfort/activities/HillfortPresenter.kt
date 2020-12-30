@@ -89,7 +89,7 @@ class HillfortPresenter(val view: HillfortView) {
       location.lng = hillfort.lng
       location.zoom = hillfort.zoom
     }
-    view.startActivityForResult(view.intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
+    view.startActivityForResult(view.intentFor<EditLocationView>().putExtra("location", location), LOCATION_REQUEST)
   }
 
   fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
