@@ -55,7 +55,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser), 0)
+      R.id.item_add -> startActivityForResult(intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser), 0)
       R.id.item_map -> startActivity<HillfortMapsActivity>()
       R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
       R.id.item_logout -> {
@@ -67,7 +67,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    var intent = intentFor<HillfortActivity>().putExtra("loggedInUser", loggedInUser)
+    var intent = intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser)
     intent.putExtra("hillfort_edit", hillfort)
     startActivityForResult(intent, 0)
   }
