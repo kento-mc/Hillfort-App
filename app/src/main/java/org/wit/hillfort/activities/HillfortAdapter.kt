@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
+import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.UserModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,7 +48,7 @@ class HillfortAdapter constructor(
         itemView.isVisited.text = "Visited on\n" + hillfort.dateVisited
       }
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
-      itemView.setOnClickListener { listener.onHillfortClick(hillfort)}
+      itemView.setOnClickListener { listener.onHillfortClick(hillfort, )}
     }
   }
 }

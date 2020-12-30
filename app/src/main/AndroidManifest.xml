@@ -28,8 +28,8 @@
             android:label="@string/title_activity_map" />
         <activity
             android:name=".activities.HillfortView"
-            android:parentActivityName=".activities.HillfortListActivity" />
-        <activity android:name=".activities.HillfortListActivity" />
+            android:parentActivityName=".activities.HillfortListView" />
+        <activity android:name=".activities.HillfortListView" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SignupActivity" />
         <activity

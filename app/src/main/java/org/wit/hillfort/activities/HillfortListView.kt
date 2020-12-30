@@ -12,15 +12,16 @@ import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
 
-class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
+class HillfortListView : AppCompatActivity(), HillfortListener, AnkoLogger {
 
-  lateinit var app: MainApp
+  lateinit var presenter: HillfortListPresenter
   var loggedInUser: UserModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
-    app = application as MainApp
+    toolbar.title = title
+    setSupportActionBar(toolbar)
 
     if (intent.hasExtra("loggedInUser")) {
       loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
@@ -28,20 +29,12 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
       info(loggedInUser)
     }
 
-      toolbar.title = title
-    setSupportActionBar(toolbar)
-
+    presenter = HillfortListPresenter(this)
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    loadHillforts(loggedInUser!!)
-  }
-
-  private fun loadHillforts(user: UserModel) {
-    showHillforts(app.hillforts.findAllByUser(user))
-  }
-
-  fun showHillforts (hillforts: List<HillfortModel>) {
-    recyclerView.adapter = HillfortAdapter(hillforts, this)
+//    loadHillforts(loggedInUser!!)
+    recyclerView.adapter =
+      HillfortAdapter(presenter.getHillforts(loggedInUser!!), this)
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
@@ -55,25 +48,23 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> startActivityForResult(intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser), 0)
-      R.id.item_map -> startActivity<HillfortMapsActivity>()
-      R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
+      R.id.item_add -> presenter.doAddHillfort(loggedInUser!!)
+      R.id.item_map -> presenter.doShowHillfortsMap()
+      R.id.item_settings -> presenter.doShowSettings(loggedInUser!!)
       R.id.item_logout -> {
         loggedInUser = null
-        startActivity(intentFor<LoginActivity>())
+        presenter.doLogout()
       }
     }
     return super.onOptionsItemSelected(item)
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    var intent = intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser)
-    intent.putExtra("hillfort_edit", hillfort)
-    startActivityForResult(intent, 0)
+    presenter.doEditHillfort(hillfort, loggedInUser!!)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    loadHillforts(loggedInUser!!)
+    recyclerView.adapter?.notifyDataSetChanged()
     super.onActivityResult(requestCode, resultCode, data)
   }
 }
