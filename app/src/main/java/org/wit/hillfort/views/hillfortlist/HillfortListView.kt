@@ -32,7 +32,6 @@ class HillfortListView : AppCompatActivity(),
     presenter = HillfortListPresenter(this)
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-//    loadHillforts(loggedInUser!!)
     recyclerView.adapter =
       HillfortAdapter(
         presenter.getHillforts(
@@ -73,6 +72,14 @@ class HillfortListView : AppCompatActivity(),
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    val layoutManager = LinearLayoutManager(this)
+    recyclerView.layoutManager = layoutManager
+    recyclerView.adapter =
+      HillfortAdapter(
+        presenter.getHillforts(
+          loggedInUser!!
+        ), this
+      )
     recyclerView.adapter?.notifyDataSetChanged()
     super.onActivityResult(requestCode, resultCode, data)
   }

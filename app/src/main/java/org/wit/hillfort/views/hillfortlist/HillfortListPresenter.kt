@@ -19,6 +19,7 @@ class HillfortListPresenter(val view: HillfortListView) {
   }
 
   fun getHillforts(user: UserModel) = app.hillforts.findAllByUser(user)
+//  fun getHillforts() = app.hillforts.findAll()
 
   fun doAddHillfort(loggedInUser: UserModel) {
     view.startActivityForResult(view.intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser), 0)
