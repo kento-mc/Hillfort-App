@@ -28,7 +28,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
 
   var basePresenter: BasePresenter? = null
 
-  fun navigateTo(view: VIEW, code: Int = 0, key: String = "", value: Parcelable? = null) {
+  fun navigateTo(view: VIEW, code: Int = 0, key: Array<String> = emptyArray(), value: Array<Parcelable?> = emptyArray<Parcelable?>()){
     var intent = Intent(this, HillfortListView::class.java)
     when (view) {
       VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
@@ -36,8 +36,10 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
       VIEW.MAPS -> intent = Intent(this, HillfortMapView::class.java)
       VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
     }
-    if (key != "") {
-      intent.putExtra(key, value)
+    if (key.isNotEmpty()) {
+      key.forEachIndexed { index, key ->
+        intent.putExtra(key, value[index])
+      }
     }
     startActivityForResult(intent, code)
   }

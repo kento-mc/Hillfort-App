@@ -1,5 +1,6 @@
 package org.wit.hillfort.views.hillfortlist
 
+import android.os.Parcelable
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.wit.hillfort.views.map.HillfortMapView
@@ -8,38 +9,39 @@ import org.wit.hillfort.activities.SettingsActivity
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.BasePresenter
+import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.views.VIEW
 import org.wit.hillfort.views.hillfort.HillfortView
 
-class HillfortListPresenter(val view: HillfortListView) {
+class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
-  var app: MainApp
-
-  init {
-    app = view.application as MainApp
+  fun getHillforts(user: UserModel) {
+    view?.showHillforts(app.hillforts.findAllByUser(user))
   }
-
-  fun getHillforts(user: UserModel) = app.hillforts.findAllByUser(user)
 //  fun getHillforts() = app.hillforts.findAll()
 
   fun doAddHillfort(loggedInUser: UserModel) {
-    view.startActivityForResult(view.intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser), 0)
+    var keyArray: Array<String> = arrayOf("loggedInUser")
+    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser)
+    view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
   fun doEditHillfort(hillfort: HillfortModel, loggedInUser: UserModel) {
-    var intent = view.intentFor<HillfortView>().putExtra("loggedInUser", loggedInUser)
-    intent.putExtra("hillfort_edit", hillfort)
-    view.startActivityForResult(intent, 0)
+    var keyArray: Array<String> = arrayOf("loggedInUser", "hillfort_edit")
+    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser, hillfort)
+    view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
   fun doShowHillfortsMap() {
-    view.startActivity<HillfortMapView>()
+    view?.navigateTo(VIEW.MAPS)
   }
 
   fun doShowSettings(loggedInUser: UserModel) {
-    view.startActivityForResult(view.intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
+    view?.startActivityForResult(view!!.intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
   }
 
   fun doLogout() {
-    view.startActivity(view.intentFor<LoginActivity>())
+    view?.startActivity(view!!.intentFor<LoginActivity>())
   }
 }

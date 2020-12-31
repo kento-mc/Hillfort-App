@@ -2,6 +2,7 @@ package org.wit.hillfort.views.hillfort
 
 import android.content.ClipData
 import android.content.Intent
+import android.os.Parcelable
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
@@ -34,10 +35,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doAddOrSave(title: String, description: String, id: Long) {
+  fun doAddOrSave(title: String, description: String, id: Long, isVisited: Boolean = false, dateVisited: String = "") {
     hillfort.title = title
     hillfort.description = description
     hillfort.contributor = id
+    hillfort.isVisited = isVisited
+    hillfort.dateVisited = dateVisited
+
     if (edit) {
       app.hillforts.update(hillfort)
     } else {
@@ -86,14 +90,16 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doSetLocation() {
+    var keyArray: Array<String> = arrayOf("location")
+    var valueArray: Array<Parcelable?> = arrayOf(defaultLocation)
     if (edit == false) {
-      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", defaultLocation)
+      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
     } else {
       view?.navigateTo(
         VIEW.LOCATION,
         LOCATION_REQUEST,
-        "location",
-        Location(hillfort.lat, hillfort.lng, hillfort.zoom)
+        keyArray,
+        arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
       )
     }
   }

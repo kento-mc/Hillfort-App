@@ -99,7 +99,8 @@ class HillfortView : BaseView(), AnkoLogger {
 
     // Set checkmark status
     val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
-    if (hillfort.isVisited) menuCheck.setChecked(true)
+    menuCheck.isCheckable = true
+    if (presenter.hillfort.isVisited) menuCheck.isChecked = true
 
     // Hide delete option on first creation of hillfort
     val item: MenuItem = menu.findItem(R.id.item_delete)
@@ -118,7 +119,12 @@ class HillfortView : BaseView(), AnkoLogger {
           info(hillfortTitle.text.toString())
           info(description.text.toString())
           info(loggedInUser!!.id)
-          presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), loggedInUser!!.id )
+          presenter.doAddOrSave(
+            hillfortTitle.text.toString(),
+            description.text.toString(),
+            loggedInUser!!.id,
+            hillfort.isVisited,
+            hillfort.dateVisited)
         }
       if (hillfort.title.isNotEmpty()) {
         finish()
@@ -135,11 +141,12 @@ class HillfortView : BaseView(), AnkoLogger {
         startActivity(intentFor<LoginActivity>())
       }
       R.id.item_mark_visited -> {
-        if (hillfort.isVisited) {
-          item.setChecked(false)
+        if (presenter.hillfort.isVisited) {
+          item.isChecked = false
           hillfort.isVisited = false
+          hillfort.dateVisited = ""
         } else {
-          item.setChecked(true)
+          item.isChecked = true
           hillfort.isVisited = true
           hillfort.dateVisited = currentDate
         }

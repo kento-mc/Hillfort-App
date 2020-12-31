@@ -10,8 +10,9 @@ import org.jetbrains.anko.*
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.BaseView
 
-class HillfortListView : AppCompatActivity(),
+class HillfortListView : BaseView(),
   HillfortListener, AnkoLogger {
 
   lateinit var presenter: HillfortListPresenter
@@ -20,7 +21,6 @@ class HillfortListView : AppCompatActivity(),
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
-    toolbar.title = title
     setSupportActionBar(toolbar)
 
     if (intent.hasExtra("loggedInUser")) {
@@ -29,22 +29,29 @@ class HillfortListView : AppCompatActivity(),
       info(loggedInUser)
     }
 
-    presenter = HillfortListPresenter(this)
+    presenter = initPresenter(HillfortListPresenter(this)) as HillfortListPresenter
+
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    recyclerView.adapter =
-      HillfortAdapter(
-        presenter.getHillforts(
-          loggedInUser!!
-        ), this
-      )
-    recyclerView.adapter?.notifyDataSetChanged()
+    presenter.getHillforts(loggedInUser!!)
+//    recyclerView.adapter =
+//      HillfortAdapter(
+//        presenter.getHillforts(
+//          loggedInUser!!
+//        ), this
+//      )
+//    recyclerView.adapter?.notifyDataSetChanged()
   }
 
 //  override fun onResume() {
 //    recyclerView.adapter?.notifyDataSetChanged()
 //    return super.onResume()
 //  }
+
+  override fun showHillforts(hillforts: List<HillfortModel>) {
+    recyclerView.adapter = HillfortAdapter(hillforts, this)
+    recyclerView.adapter?.notifyDataSetChanged()
+  }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
@@ -72,15 +79,16 @@ class HillfortListView : AppCompatActivity(),
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    val layoutManager = LinearLayoutManager(this)
-    recyclerView.layoutManager = layoutManager
-    recyclerView.adapter =
-      HillfortAdapter(
-        presenter.getHillforts(
-          loggedInUser!!
-        ), this
-      )
-    recyclerView.adapter?.notifyDataSetChanged()
+//    val layoutManager = LinearLayoutManager(this)
+//    recyclerView.layoutManager = layoutManager
+//    recyclerView.adapter =
+//      HillfortAdapter(
+//        presenter.getHillforts(
+//          loggedInUser!!
+//        ), this
+//      )
+//    recyclerView.adapter?.notifyDataSetChanged()
+    presenter.getHillforts(loggedInUser!!)
     super.onActivityResult(requestCode, resultCode, data)
   }
 }
