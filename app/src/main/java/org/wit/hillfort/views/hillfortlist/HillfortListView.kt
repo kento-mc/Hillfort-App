@@ -42,6 +42,11 @@ class HillfortListView : AppCompatActivity(),
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
+//  override fun onResume() {
+//    recyclerView.adapter?.notifyDataSetChanged()
+//    return super.onResume()
+//  }
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!

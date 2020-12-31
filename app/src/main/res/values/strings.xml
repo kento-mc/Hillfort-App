@@ -6,6 +6,7 @@
     <string name="menu_addHillfort">Add</string>
     <string name="menu_cancelHillfort">Cancel</string>
     <string name="menu_deleteHillfort">Delete Hillfort</string>
+    <string name="menu_savePlacemark">Save</string>
     <string name="menu_markVisited">Visited</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_settings">Settings</string>

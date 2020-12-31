@@ -65,20 +65,20 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
 //        chooseImage.setText(R.string.change_hillfort_image)
 //      }
 //    }
-
-    btnAdd.setOnClickListener() {
-      if (hillfortTitle.toString().isEmpty()) {
-        toast(R.string.enter_hillfort_title)
-      } else {
-        info(hillfortTitle.text.toString())
-        info(description.text.toString())
-        info(loggedInUser!!.id)
-        presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), loggedInUser!!.id )
-      }
-//      if (hillfort.title.isNotEmpty()) {
-//        finish()
+//
+//    btnAdd.setOnClickListener() {
+//      if (hillfortTitle.toString().isEmpty()) {
+//        toast(R.string.enter_hillfort_title)
+//      } else {
+//        info(hillfortTitle.text.toString())
+//        info(description.text.toString())
+//        info(loggedInUser!!.id)
+//        presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), loggedInUser!!.id )
 //      }
-    }
+////      if (hillfort.title.isNotEmpty()) {
+////        finish()
+////      }
+//    }
 
     chooseImage.setOnClickListener { presenter.doSelectMultiImage() }
 
@@ -96,7 +96,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
   fun showHillfort(hillfort: HillfortModel) {
     hillfortTitle.setText(hillfort.title)
     description.setText(hillfort.description)
-    btnAdd.setText(R.string.save_hillfort)
+//    btnAdd.setText(R.string.save_hillfort)
     hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
     if (hillfort.image != null) {
       chooseImage.setText(R.string.change_hillfort_image)
@@ -133,12 +133,24 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
-      R.id.item_cancel -> {
+      R.id.item_save -> {
+        if (hillfortTitle.toString().isEmpty()) {
+          toast(R.string.enter_hillfort_title)
+        } else {
+          info(hillfortTitle.text.toString())
+          info(description.text.toString())
+          info(loggedInUser!!.id)
+          presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), loggedInUser!!.id )
+        }
+      if (hillfort.title.isNotEmpty()) {
         finish()
       }
+      }
+      R.id.item_cancel -> {
+        presenter.doCancel()
+      }
       R.id.item_delete -> {
-        app.hillforts.delete(hillfort)
-        finish()
+        presenter.doDelete()
       }
       R.id.item_logout -> {
         loggedInUser = null
