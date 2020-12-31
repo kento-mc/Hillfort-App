@@ -2,7 +2,6 @@ package org.wit.hillfort.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -11,6 +10,7 @@ import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.hillfortlist.HillfortListView
 
 class LoginActivity : AppCompatActivity(), AnkoLogger {
 
@@ -36,8 +36,9 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
         loggedInUser = app.users.validate(user.copy())!!
       }
       if (loggedInUser != null) {
+        app.loggedInUser = loggedInUser!!
         setResult(AppCompatActivity.RESULT_OK)
-        startActivity(intentFor<HillfortListActivity>().putExtra("loggedInUser", loggedInUser))
+        startActivity(intentFor<HillfortListView>().putExtra("loggedInUser", loggedInUser))
         finish()
       } else {
         toast(R.string.enter_email_password)

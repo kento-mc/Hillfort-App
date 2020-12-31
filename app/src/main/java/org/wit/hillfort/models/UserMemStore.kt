@@ -24,6 +24,13 @@ class UserMemStore : UserStore, AnkoLogger {
     } else return null
   }
 
+  override fun findOneByID(id: Long): UserModel? {
+    var foundUser: UserModel? = users.find { p -> p.id == id }
+    if (foundUser != null) {
+      return foundUser
+    } else return null
+  }
+
   override fun findOneByEmail(user: UserModel): UserModel? {
     var foundUser: UserModel? = users.find { p -> p.email == user.email }
     if (foundUser != null) {

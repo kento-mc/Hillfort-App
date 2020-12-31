@@ -13,12 +13,12 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
 
   val hillforts = ArrayList<HillfortModel>()
 
-  override fun findAll(): List<HillfortModel> {
+  override fun findAll(): MutableList<HillfortModel> {
     return hillforts
   }
 
   override fun findAllByUser(user: UserModel): List<HillfortModel> {
-    return hillforts.filter { it.contributor == user.id }
+    return hillforts.filter { it.contributor == user.id }.toMutableList()
   }
 
   override fun create(hillfort: HillfortModel) {
@@ -50,5 +50,10 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
 
   fun logAll() {
     hillforts.forEach{ info("${it}") }
+  }
+
+  override fun findById(id:Long) : HillfortModel? {
+    val foundHillfort: HillfortModel? = hillforts.find { it.id == id }
+    return foundHillfort
   }
 }

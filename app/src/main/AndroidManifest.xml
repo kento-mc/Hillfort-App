@@ -12,22 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".views.map.HillfortMapView"
+            android:label="@string/title_activity_hillfort_maps"></activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings">
-        </activity>
+            android:label="@string/title_activity_settings"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.location.EditLocationView"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".activities.HillfortActivity"
-            android:parentActivityName=".activities.HillfortListActivity" />
-        <activity android:name=".activities.HillfortListActivity" />
+            android:name=".views.hillfort.HillfortView"
+            android:parentActivityName=".views.hillfortlist.HillfortListView" />
+        <activity android:name=".views.hillfortlist.HillfortListView" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SignupActivity" />
         <activity
