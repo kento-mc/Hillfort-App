@@ -48,9 +48,13 @@ class HillfortView : BaseView(), AnkoLogger {
     }
 
     chooseImage.setOnClickListener {
-      tempTitle = hillfortTitle.text.toString()
-      tempDescription = description.text.toString()
-      presenter.doSelectMultiImage()
+      if (presenter.hillfort.images.size == 4 ) {
+        toast(R.string.change_hillfort_4_images)
+      } else {
+        tempTitle = hillfortTitle.text.toString()
+        tempDescription = description.text.toString()
+        presenter.doSelectMultiImage()
+      }
     }
 
     hillfortImage.setOnClickListener { presenter.doSelectImageOne() }
@@ -75,17 +79,20 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun showHillfort(hillfort: HillfortModel) {
     hillfortTitle.setText(hillfort.title)
     description.setText(hillfort.description)
-    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+//    if (hillfort.images.isNotEmpty()) hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.images[0]))
+
 //    if (hillfort.image != null) {
 //      chooseImage.setText(R.string.change_hillfort_image)
 //    }
     val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
     var i = 0
-    while ( i < hillfort.images.size) {
-      imageVars[i+1].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
+    while (i < hillfort.images.size) {
+      imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
       i++
     }
-    if (hillfort.image != null) {
+    if (hillfort.images.size == 4) {
+      chooseImage.setText(R.string.change_hillfort_4_images)
+    } else if (hillfort.images.isNotEmpty()) {
       chooseImage.setText(R.string.change_hillfort_image)
     }
   }

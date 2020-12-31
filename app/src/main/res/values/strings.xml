@@ -15,6 +15,8 @@
     <string name="button_addImage"> Add Image </string>
     <string name="select_hillfort_image">Select hillfort image</string>
     <string name="change_hillfort_image">Add image(s) (up to 4)</string>
+    <string name="change_hillfort_4_images">Tap individual images to update</string>
+    <string name="too_many_images">Can\'t add more than 4 images!</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_hillfort_maps">Hillforts Map</string>
