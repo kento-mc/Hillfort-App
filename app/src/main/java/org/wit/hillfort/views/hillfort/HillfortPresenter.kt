@@ -3,15 +3,11 @@ package org.wit.hillfort.views.hillfort
 import android.content.ClipData
 import android.content.Intent
 import android.os.Parcelable
-import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.views.location.EditLocationView
-import org.wit.hillfort.helpers.readImage
 import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.helpers.showMultipleImagesPicker
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
@@ -108,34 +104,33 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     when (requestCode) {
       IMAGE_REQUEST -> {
         if (data != null) {
-          hillfort.image = data.data.toString()
+          hillfort.images[0] = data.data.toString()
           view?.showHillfort(hillfort)
         }
       }
       IMAGE_CHANGE_2 -> {
         if (data != null) {
-          hillfort.images[0] = data.data.toString()
+          hillfort.images[1] = data.data.toString()
           view?.showHillfort(hillfort)
         }
       }
       IMAGE_CHANGE_3 -> {
         if (data != null) {
-          hillfort.images[1] = data.data.toString()
+          hillfort.images[2] = data.data.toString()
           view?.showHillfort(hillfort)
         }
       }
       IMAGE_CHANGE_4 -> {
         if (data != null) {
-          hillfort.images[2] = data.data.toString()
+          hillfort.images[3] = data.data.toString()
           view?.showHillfort(hillfort)
         }
       }
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
-          if (data.data != null) {
-            hillfort.image = data.data.toString()
-            view?.showHillfort(hillfort)
-          } else {
+          if (data.data != null) { // Is only one image selected?
+            hillfort.images.add(data.data.toString())
+          } else { // Multiple images selected
             var clipData: ClipData = data.clipData!!
             var clipArray: MutableList<String> = ArrayList()
             var i = 0
@@ -144,23 +139,26 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
               i++
             }
             if (clipArray.size > 0) {
-              for (image in clipArray) {
-                hillfort.images.add(image)
-              }
+              if (clipArray.size + hillfort.images.size <= 4) {
+                for (image in clipArray) {
+                  hillfort.images.add(image)
+                }
+              } else view?.toast(R.string.too_many_images)
             }
-            val imageVars = arrayOf(view?.hillfortImage, view?.hillfortImage2, view?.hillfortImage3, view?.hillfortImage4)
-            i = 0
-            while (i < hillfort.images.size) {
-              if (view?.hillfortImage?.drawable == null) { // Check if hillfortImage is already set
-                imageVars[i]?.setImageBitmap(readImage(view!!, resultCode, data, i))
-              } else {
-                imageVars[i+1]?.setImageBitmap(readImage(view!!, resultCode, data, i))
-              }
-              i++
-            }
+//            val imageVars = arrayOf(view?.hillfortImage, view?.hillfortImage2, view?.hillfortImage3, view?.hillfortImage4)
+//            i = 0
+//            while (i < hillfort.images.size) {
+//              if (view?.hillfortImage?.drawable == null) { // Check if hillfortImage is already set
+//                imageVars[i]?.setImageBitmap(readImage(view!!, resultCode, data, i))
+//              } else {
+//                imageVars[i+1]?.setImageBitmap(readImage(view!!, resultCode, data, i))
+//              }
+//              i++
+//            }
             view?.info(clipArray)
           }
         }
+        view?.showHillfort(hillfort)
       }
       LOCATION_REQUEST -> {
         if (data != null) {

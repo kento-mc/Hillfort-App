@@ -41,7 +41,7 @@ class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
   override fun showHillfort(hillfort: HillfortModel) {
     currentTitle.text = hillfort.title
     currentDescription.text = hillfort.description
-    currentImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+    currentImage.setImageBitmap(readImageFromPath(this, hillfort.images[0]))
   }
 
   override fun showHillforts(hillforts: List<HillfortModel>) {
