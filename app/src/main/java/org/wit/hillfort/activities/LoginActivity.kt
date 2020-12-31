@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
         loggedInUser = app.users.validate(user.copy())!!
       }
       if (loggedInUser != null) {
+        app.loggedInUser = loggedInUser!!
         setResult(AppCompatActivity.RESULT_OK)
         startActivity(intentFor<HillfortListView>().putExtra("loggedInUser", loggedInUser))
         finish()

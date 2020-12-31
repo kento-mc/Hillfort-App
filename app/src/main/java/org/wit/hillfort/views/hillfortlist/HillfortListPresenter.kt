@@ -33,7 +33,9 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
-  fun doShowHillfortsMap() {
+  fun doShowHillfortsMap(loggedInUser: UserModel) {
+    var keyArray: Array<String> = arrayOf("loggedInUser")
+    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser)
     view?.navigateTo(VIEW.MAPS)
   }
 

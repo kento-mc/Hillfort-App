@@ -64,7 +64,7 @@ class HillfortListView : BaseView(),
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddHillfort(loggedInUser!!)
-      R.id.item_map -> presenter.doShowHillfortsMap()
+      R.id.item_map -> presenter.doShowHillfortsMap(loggedInUser!!)
       R.id.item_settings -> presenter.doShowSettings(loggedInUser!!)
       R.id.item_logout -> {
         loggedInUser = null
