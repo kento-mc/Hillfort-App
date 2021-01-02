@@ -51,21 +51,40 @@ class HillfortView : BaseView(), AnkoLogger {
       if (presenter.hillfort.images.size == 4 ) {
         toast(R.string.change_hillfort_4_images)
       } else {
-        tempTitle = hillfortTitle.text.toString()
-        tempDescription = description.text.toString()
+        setTempText()
         presenter.doSelectMultiImage()
       }
     }
 
-    hillfortImage.setOnClickListener { presenter.doSelectImageOne() }
+    hillfortImage.setOnClickListener {
+      setTempText()
+      presenter.doSelectImageOne()
+    }
 
-    hillfortImage2.setOnClickListener { presenter.doSelectImageTwo() }
+    hillfortImage2.setOnClickListener {
+      setTempText()
+      presenter.doSelectImageTwo()
+    }
 
-    hillfortImage3.setOnClickListener { presenter.doSelectImageThree() }
+    hillfortImage3.setOnClickListener {
+      setTempText()
+      presenter.doSelectImageThree()
+    }
 
-    hillfortImage4.setOnClickListener { presenter.doSelectImageFour() }
+    hillfortImage4.setOnClickListener {
+      setTempText()
+      presenter.doSelectImageFour()
+    }
 
-    hillfortLocation.setOnClickListener { presenter.doSetLocation() }
+    hillfortLocation.setOnClickListener {
+      setTempText()
+      presenter.doSetLocation()
+    }
+  }
+
+  fun setTempText() {
+    tempTitle = hillfortTitle.text.toString()
+    tempDescription = description.text.toString()
   }
 
   override fun onResume() {
