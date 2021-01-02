@@ -29,6 +29,7 @@ class HillfortMapPresenter(view: BaseView) : BasePresenter(view){
   }
 
   fun loadHillforts() {
-    view?.showHillforts(app.hillforts.findAllByUser(app.loggedInUser)) //TODO replace with findALLByUser
+//    view?.showHillforts(app.hillforts.findAllByUser(app.loggedInUser)) //TODO replace with findALLByUser
+  view?.showHillforts(app.hillforts.findAll())
   }
 }

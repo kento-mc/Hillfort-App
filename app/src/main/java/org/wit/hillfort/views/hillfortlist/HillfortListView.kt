@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.*
 import org.wit.hillfort.R
@@ -16,24 +17,20 @@ class HillfortListView : BaseView(),
   HillfortListener, AnkoLogger {
 
   lateinit var presenter: HillfortListPresenter
-  var loggedInUser: UserModel? = null
+  var loggedInUser: FirebaseUser? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
     setSupportActionBar(toolbar)
 
-    if (intent.hasExtra("loggedInUser")) {
-      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
-      info("User:")
-      info(loggedInUser)
-    }
-
     presenter = initPresenter(HillfortListPresenter(this)) as HillfortListPresenter
+    loggedInUser = presenter.app.auth?.currentUser
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    presenter.getHillforts(loggedInUser!!)
+//    presenter.getHillforts(loggedInUser!!)
+    presenter.getHillforts()
 //    recyclerView.adapter =
 //      HillfortAdapter(
 //        presenter.getHillforts(
@@ -56,7 +53,7 @@ class HillfortListView : BaseView(),
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(loggedInUser?.userName)
+    menuUser.setTitle(loggedInUser?.email)
 
     return super.onCreateOptionsMenu(menu)
   }
@@ -67,7 +64,7 @@ class HillfortListView : BaseView(),
       R.id.item_map -> presenter.doShowHillfortsMap(loggedInUser!!)
       R.id.item_settings -> presenter.doShowSettings(loggedInUser!!)
       R.id.item_logout -> {
-        loggedInUser = null
+//        loggedInUser = null
         presenter.doLogout()
       }
     }
@@ -88,7 +85,9 @@ class HillfortListView : BaseView(),
 //        ), this
 //      )
 //    recyclerView.adapter?.notifyDataSetChanged()
-    presenter.getHillforts(loggedInUser!!)
+
+//    presenter.getHillforts(loggedInUser!!)
+    presenter.getHillforts()
     super.onActivityResult(requestCode, resultCode, data)
   }
 }

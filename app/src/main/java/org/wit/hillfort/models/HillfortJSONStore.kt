@@ -1,6 +1,7 @@
 package org.wit.hillfort.models
 
 import android.content.Context
+import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

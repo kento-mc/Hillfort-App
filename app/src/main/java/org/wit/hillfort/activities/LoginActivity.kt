@@ -27,23 +27,23 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
 
     app = application as MainApp
 
-    btnLogin.setOnClickListener() {
-      user.email = userEmail.text.toString()
-      user.password = password.text.toString()
-      if (user.email.isEmpty() || user.password.isEmpty()) {
-        toast(R.string.enter_email_password)
-      } else {
-        loggedInUser = app.users.validate(user.copy())!!
-      }
-      if (loggedInUser != null) {
-        app.loggedInUser = loggedInUser!!
-        setResult(AppCompatActivity.RESULT_OK)
-        startActivity(intentFor<HillfortListView>().putExtra("loggedInUser", loggedInUser))
-        finish()
-      } else {
-        toast(R.string.enter_email_password)
-      }
-    }
+//    btnLogin.setOnClickListener() {
+//      user.email = userEmail.text.toString()
+//      user.password = password.text.toString()
+//      if (user.email.isEmpty() || user.password.isEmpty()) {
+//        toast(R.string.enter_email_password)
+//      } else {
+//        loggedInUser = app.users.validate(user.copy())!!
+//      }
+//      if (loggedInUser != null) {
+//        app.loggedInUser = loggedInUser!!
+//        setResult(AppCompatActivity.RESULT_OK)
+//        startActivity(intentFor<HillfortListView>().putExtra("loggedInUser", loggedInUser))
+//        finish()
+//      } else {
+//        toast(R.string.enter_email_password)
+//      }
+//    }
 
     createAccountLink.setOnClickListener() {
       startActivity(intentFor<SignupActivity>())

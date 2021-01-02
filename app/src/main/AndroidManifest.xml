@@ -31,6 +31,7 @@
             android:parentActivityName=".views.hillfortlist.HillfortListView" />
         <activity android:name=".views.hillfortlist.HillfortListView" />
         <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.Login" />
         <activity android:name=".activities.SignupActivity" />
         <activity
             android:name=".activities.SplashActivity"

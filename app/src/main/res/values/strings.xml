@@ -28,7 +28,7 @@
     <string name="enter_email_password"> Please enter a valid email address/password </string>
     <string name="enter_user_email_password"> Please enter a user name and valid email address/password </string>
     <string name="no_account">No account? </string>
-    <string name="create_account">Create one! </string>
+    <string name="create_account_2">Create one! </string>
     <string name="already_registered">Already registered? </string>
     <string name="login">Log in! </string>
     <string name="user_exists">User with that email address already exists! </string>
@@ -40,4 +40,29 @@
     <string name="hillfort_description_placeholder">Hillfort Description</string>
     <string name="hillfort_title_placeholder">Hillfort Title</string>
     <string name="hillfort_image_placeholder">Hillfort Image</string>
+
+    <!-- START Firebase Resources-->
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="send_link">Send Link</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Please Login Below</string>
+
+    <!--END Firebase Resources-->
 </resources>
