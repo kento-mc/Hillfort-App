@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.password
-import kotlinx.android.synthetic.main.activity_login.toolbarLogin
+import kotlinx.android.synthetic.main.activity_settings.toolbar
 import kotlinx.android.synthetic.main.activity_login.userEmail
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -29,8 +29,11 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_settings)
-    toolbarLogin.title = "Hillfort Settings"
-    setSupportActionBar(toolbarLogin)
+    toolbar.title = "Hillfort Settings"
+    setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
     info("Login to Hillfort app..")
 
     app = application as MainApp

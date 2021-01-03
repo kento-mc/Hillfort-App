@@ -40,7 +40,7 @@ class HillfortView : BaseView(), AnkoLogger {
     val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
     currentDate = simpleDateFormat.format(Date())
 
-    init(toolbarAdd)
+    init(toolbarAdd, true)
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 

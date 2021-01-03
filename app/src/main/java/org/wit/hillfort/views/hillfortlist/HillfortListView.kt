@@ -22,6 +22,7 @@ class HillfortListView : BaseView(),
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
     setSupportActionBar(toolbar)
+    super.init(toolbar, false)
 
     if (intent.hasExtra("loggedInUser")) {
       loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
