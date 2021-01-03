@@ -131,7 +131,7 @@ class HillfortView : BaseView(), AnkoLogger {
 
     // Show user in menu bar
     val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(loggedInUser?.userName)
+    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
     val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
@@ -154,11 +154,10 @@ class HillfortView : BaseView(), AnkoLogger {
         } else {
           info(hillfortTitle.text.toString())
           info(description.text.toString())
-          info(loggedInUser!!.id)
           presenter.doAddOrSave(
             hillfortTitle.text.toString(),
             description.text.toString(),
-            loggedInUser!!.id,
+            presenter.app.loggedInUser!!.id,
             hillfort.isVisited,
             hillfort.dateVisited)
         }
