@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -25,6 +27,7 @@ class HillfortView : BaseView(), AnkoLogger {
   lateinit var presenter: HillfortPresenter
   var hillfort = HillfortModel()
   var loggedInUser : UserModel? = null
+  lateinit var map: GoogleMap
   var currentDate: String = ""
   var tempTitle: String = ""
   var tempDescription: String = ""
@@ -33,7 +36,7 @@ class HillfortView : BaseView(), AnkoLogger {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
 
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//    supportActionBar?.setDisplayHomeAsUpEnabled(true)
     val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
     currentDate = simpleDateFormat.format(Date())
 
@@ -41,11 +44,17 @@ class HillfortView : BaseView(), AnkoLogger {
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 
-    if (intent.hasExtra("loggedInUser")) {
-      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
-      info("User:")
-      info(loggedInUser)
+    mapView.onCreate(savedInstanceState);
+    mapView.getMapAsync {
+      map = it
+      presenter.doConfigureMap(map)
     }
+
+//    if (intent.hasExtra("loggedInUser")) {
+//      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
+//      info("User:")
+//      info(loggedInUser)
+//    }
 
     chooseImage.setOnClickListener {
       if (presenter.hillfort.images.size == 4 ) {
@@ -93,6 +102,7 @@ class HillfortView : BaseView(), AnkoLogger {
       description.setText(tempDescription)
     }
     return super.onResume()
+    mapView.onResume()
   }
 
   override fun showHillfort(hillfort: HillfortModel) {
@@ -190,5 +200,25 @@ class HillfortView : BaseView(), AnkoLogger {
 
   override fun onBackPressed() {
     presenter.doCancel()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    mapView.onDestroy()
+  }
+
+  override fun onLowMemory() {
+    super.onLowMemory()
+    mapView.onLowMemory()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    mapView.onPause()
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    mapView.onSaveInstanceState(outState)
   }
 }
