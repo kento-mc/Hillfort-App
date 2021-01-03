@@ -36,7 +36,6 @@ class HillfortView : BaseView(), AnkoLogger {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
 
-//    supportActionBar?.setDisplayHomeAsUpEnabled(true)
     val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
     currentDate = simpleDateFormat.format(Date())
 
