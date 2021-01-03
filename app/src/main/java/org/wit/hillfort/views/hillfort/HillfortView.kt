@@ -85,9 +85,18 @@ class HillfortView : BaseView(), AnkoLogger {
       presenter.doSelectImageFour()
     }
 
-    hillfortLocation.setOnClickListener {
-      setTempText()
-      presenter.doSetLocation()
+//    hillfortLocation.setOnClickListener {
+//      setTempText()
+//      presenter.doSetLocation()
+//    }
+
+    mapView.getMapAsync {
+      map = it
+      presenter.doConfigureMap(map)
+      it.setOnMapClickListener {
+        setTempText()
+        presenter.doSetLocation()
+      }
     }
   }
 
@@ -119,6 +128,8 @@ class HillfortView : BaseView(), AnkoLogger {
       imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
       i++
     }
+    lat.setText("%.6f".format(hillfort.lat))
+    lng.setText("%.6f".format(hillfort.lng))
     if (hillfort.images.size == 4) {
       chooseImage.setText(R.string.change_hillfort_4_images)
     } else if (hillfort.images.isNotEmpty()) {

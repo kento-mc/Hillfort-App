@@ -1,8 +1,11 @@
 package org.wit.hillfort.views.hillfort
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.Intent
 import android.os.Parcelable
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -10,6 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
+import org.wit.hillfort.helpers.checkLocationPermissions
+import org.wit.hillfort.helpers.isPermissionGranted
 import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.helpers.showMultipleImagesPicker
 import org.wit.hillfort.models.HillfortModel
@@ -21,6 +26,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   var hillfort = HillfortModel()
   var defaultLocation = Location(52.245696, -7.139102, 15f)
+  var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
   var map: GoogleMap? = null
   var loggedInUser : UserModel? = null
   var edit = false;
@@ -35,8 +41,27 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
       hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
       view.showHillfort(hillfort)
     } else {
+      if (checkLocationPermissions(view)) {
+        doSetCurrentLocation()
+      }
       hillfort.lat = defaultLocation.lat
       hillfort.lng = defaultLocation.lng
+    }
+  }
+
+  override fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    if (isPermissionGranted(requestCode, grantResults)) {
+      doSetCurrentLocation()
+    } else {
+      // permissions denied, so use the default location
+      locationUpdate(defaultLocation.lat, defaultLocation.lng)
+    }
+  }
+
+  @SuppressLint("MissingPermission")
+  fun doSetCurrentLocation() {
+    locationService.lastLocation.addOnSuccessListener {
+      locationUpdate(it.latitude, it.longitude)
     }
   }
 
@@ -96,17 +121,18 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doSetLocation() {
     var keyArray: Array<String> = arrayOf("location")
-    var valueArray: Array<Parcelable?> = arrayOf(defaultLocation)
-    if (edit == false) {
-      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
-    } else {
-      view?.navigateTo(
-        VIEW.LOCATION,
-        LOCATION_REQUEST,
-        keyArray,
-        arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
-      )
-    }
+    var valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
+//    if (edit == false) {
+//      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
+//    } else {
+//      view?.navigateTo(
+//        VIEW.LOCATION,
+//        LOCATION_REQUEST,
+//        keyArray,
+//        arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
+//      )
+//    }
+    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
   }
 
   fun doConfigureMap(m: GoogleMap) {
