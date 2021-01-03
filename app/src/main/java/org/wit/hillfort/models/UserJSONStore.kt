@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.AnkoLogger
 import org.wit.hillfort.helpers.*
+import org.wit.hillfort.models.json.generateRandomId
+import org.wit.hillfort.models.json.gsonBuilder
 
 val JSON_USER_FILE = "users.json"
 //val gsonBuilder = GsonBuilder().setPrettyPrinting().create()

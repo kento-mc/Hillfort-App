@@ -17,6 +17,7 @@ import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
 import java.text.SimpleDateFormat
@@ -123,13 +124,17 @@ class HillfortView : BaseView(), AnkoLogger {
       imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
       i++
     }
-    lat.setText("%.6f".format(hillfort.lat))
-    lng.setText("%.6f".format(hillfort.lng))
+    this.showLocation(hillfort.location)
     if (hillfort.images.size == 4) {
       chooseImage.setText(R.string.change_hillfort_4_images)
     } else if (hillfort.images.isNotEmpty()) {
       chooseImage.setText(R.string.change_hillfort_image)
     }
+  }
+
+  override fun showLocation(loc: Location) {
+    lat.setText("%.6f".format(hillfort.location.lat))
+    lng.setText("%.6f".format(hillfort.location.lng))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -12,8 +12,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.*
 import org.wit.hillfort.models.HillfortModel
@@ -44,24 +46,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
       if (checkLocationPermissions(view)) {
         doSetCurrentLocation()
       }
-      hillfort.lat = defaultLocation.lat
-      hillfort.lng = defaultLocation.lng
-    }
-  }
-
-  override fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-    if (isPermissionGranted(requestCode, grantResults)) {
-      doSetCurrentLocation()
-    } else {
-      // permissions denied, so use the default location
-      locationUpdate(defaultLocation.lat, defaultLocation.lng)
     }
   }
 
   @SuppressLint("MissingPermission")
   fun doSetCurrentLocation() {
     locationService.lastLocation.addOnSuccessListener {
-      locationUpdate(it.latitude, it.longitude)
+      locationUpdate(Location(it.latitude, it.longitude))
     }
   }
 
@@ -71,12 +62,20 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
       override fun onLocationResult(locationResult: LocationResult?) {
         if (locationResult != null && locationResult.locations != null) {
           val l = locationResult.locations.last()
-          locationUpdate(l.latitude, l.longitude)
+          locationUpdate(Location(l.latitude, l.longitude))
         }
       }
     }
     if (!edit) {
       locationService.requestLocationUpdates(locationRequest, locationCallback, null)
+    }
+  }
+
+  override fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    if (isPermissionGranted(requestCode, grantResults)) {
+      doSetCurrentLocation()
+    } else {
+      locationUpdate(defaultLocation)
     }
   }
 
@@ -86,13 +85,16 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     hillfort.contributor = id
     hillfort.isVisited = isVisited
     hillfort.dateVisited = dateVisited
-
-    if (edit) {
-      app.hillforts.update(hillfort)
-    } else {
-      app.hillforts.create(hillfort)
+    doAsync {
+      if (edit) {
+        app.hillforts.update(hillfort)
+      } else {
+        app.hillforts.create(hillfort)
+      }
+      uiThread {
+        view?.finish()
+      }
     }
-    view?.finish()
   }
 
   fun doCancel() {
@@ -136,7 +138,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doSetLocation() {
     var keyArray: Array<String> = arrayOf("location")
-    var valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
+    var valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
 //    if (edit == false) {
 //      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
 //    } else {
@@ -152,18 +154,17 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doConfigureMap(m: GoogleMap) {
     map = m
-    locationUpdate(hillfort.lat, hillfort.lng)
+    locationUpdate(hillfort.location)
   }
 
-  fun locationUpdate(lat: Double, lng: Double) {
-    hillfort.lat = lat
-    hillfort.lng = lng
-    hillfort.zoom = 15f
+  fun locationUpdate(location: Location) {
+    hillfort.location = location
+    hillfort.location.zoom = 15f
     map?.clear()
     map?.uiSettings?.setZoomControlsEnabled(true)
-    val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.lat, hillfort.lng))
+    val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
     map?.addMarker(options)
-    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.lat, hillfort.lng), hillfort.zoom))
+    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))
     view?.showHillfort(hillfort)
   }
 
@@ -230,10 +231,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
       LOCATION_REQUEST -> {
         if (data != null) {
           val location = data.extras?.getParcelable<Location>("location")!!
-          hillfort.lat = location.lat
-          hillfort.lng = location.lng
-          hillfort.zoom = location.zoom
-          locationUpdate(hillfort.lat, hillfort.lng)
+          hillfort.location = location
+          locationUpdate(location)
         }
       }
     }

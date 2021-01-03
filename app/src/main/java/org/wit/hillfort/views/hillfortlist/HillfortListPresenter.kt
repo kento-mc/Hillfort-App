@@ -1,8 +1,10 @@
 package org.wit.hillfort.views.hillfortlist
 
 import android.os.Parcelable
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.activities.SettingsActivity
@@ -17,9 +19,14 @@ import org.wit.hillfort.views.hillfort.HillfortView
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun getHillforts(user: UserModel) {
-    view?.showHillforts(app.hillforts.findAllByUser(user))
+    doAsync {
+//    view?.showHillforts(app.hillforts.findAllByUser(user))
+      val hillforts = app.hillforts.findAll()
+      uiThread {
+        view?.showHillforts(hillforts)
+      }
+    }
   }
-//  fun getHillforts() = app.hillforts.findAll()
 
   fun doAddHillfort(loggedInUser: UserModel) {
     var keyArray: Array<String> = arrayOf("loggedInUser")
