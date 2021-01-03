@@ -5,6 +5,8 @@ import android.content.ClipData
 import android.content.Intent
 import android.os.Parcelable
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,10 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.helpers.checkLocationPermissions
-import org.wit.hillfort.helpers.isPermissionGranted
-import org.wit.hillfort.helpers.showImagePicker
-import org.wit.hillfort.helpers.showMultipleImagesPicker
+import org.wit.hillfort.helpers.*
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
@@ -30,6 +29,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   var map: GoogleMap? = null
   var loggedInUser : UserModel? = null
   var edit = false;
+  val locationRequest = createDefaultLocationRequest()
 
   init {
     if (view.intent.hasExtra("hillfort_edit")) {
@@ -62,6 +62,21 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   fun doSetCurrentLocation() {
     locationService.lastLocation.addOnSuccessListener {
       locationUpdate(it.latitude, it.longitude)
+    }
+  }
+
+  @SuppressLint("MissingPermission")
+  fun doResartLocationUpdates() {
+    var locationCallback = object : LocationCallback() {
+      override fun onLocationResult(locationResult: LocationResult?) {
+        if (locationResult != null && locationResult.locations != null) {
+          val l = locationResult.locations.last()
+          locationUpdate(l.latitude, l.longitude)
+        }
+      }
+    }
+    if (!edit) {
+      locationService.requestLocationUpdates(locationRequest, locationCallback, null)
     }
   }
 

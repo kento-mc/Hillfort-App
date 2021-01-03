@@ -112,16 +112,12 @@ class HillfortView : BaseView(), AnkoLogger {
     }
     return super.onResume()
     mapView.onResume()
+    presenter.doResartLocationUpdates()
   }
 
   override fun showHillfort(hillfort: HillfortModel) {
-    hillfortTitle.setText(hillfort.title)
-    description.setText(hillfort.description)
-//    if (hillfort.images.isNotEmpty()) hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.images[0]))
-
-//    if (hillfort.image != null) {
-//      chooseImage.setText(R.string.change_hillfort_image)
-//    }
+    if (hillfortTitle.text.isEmpty()) hillfortTitle.setText(hillfort.title)
+    if (description.text.isEmpty()) description.setText(hillfort.description)
     val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
     var i = 0
     while (i < hillfort.images.size) {
