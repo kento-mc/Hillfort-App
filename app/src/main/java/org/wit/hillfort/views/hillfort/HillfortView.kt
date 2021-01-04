@@ -17,6 +17,7 @@ import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
 import java.text.SimpleDateFormat
@@ -35,13 +36,12 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
-
-    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
-    currentDate = simpleDateFormat.format(Date())
-
     init(toolbarAdd, true)
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
+
+    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+    currentDate = simpleDateFormat.format(Date())
 
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync {
@@ -123,8 +123,7 @@ class HillfortView : BaseView(), AnkoLogger {
       imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
       i++
     }
-    lat.setText("%.6f".format(hillfort.lat))
-    lng.setText("%.6f".format(hillfort.lng))
+    this.showLocation(hillfort.location)
     if (hillfort.images.size == 4) {
       chooseImage.setText(R.string.change_hillfort_4_images)
     } else if (hillfort.images.isNotEmpty()) {
@@ -132,12 +131,17 @@ class HillfortView : BaseView(), AnkoLogger {
     }
   }
 
+  override fun showLocation(loc: Location) {
+    lat.setText("%.6f".format(hillfort.location.lat))
+    lng.setText("%.6f".format(hillfort.location.lng))
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
 
-    // Show user in menu bar
-    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(presenter.app.loggedInUser?.userName)
+//    // Show user in menu bar
+//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+//    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
     val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
@@ -163,13 +167,13 @@ class HillfortView : BaseView(), AnkoLogger {
           presenter.doAddOrSave(
             hillfortTitle.text.toString(),
             description.text.toString(),
-            presenter.app.loggedInUser!!.id,
+            presenter.app.currentUser.uid,
             hillfort.isVisited,
             hillfort.dateVisited)
         }
-      if (hillfort.title.isNotEmpty()) {
-        finish()
-      }
+        if (hillfort.title.isNotEmpty()) {
+          finish()
+        }
       }
       R.id.item_cancel -> {
         presenter.doCancel()
@@ -178,7 +182,6 @@ class HillfortView : BaseView(), AnkoLogger {
         presenter.doDelete()
       }
       R.id.item_logout -> {
-        loggedInUser = null
         startActivity(intentFor<LoginActivity>())
       }
       R.id.item_mark_visited -> {

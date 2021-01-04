@@ -1,8 +1,11 @@
 package org.wit.hillfort.views.hillfortlist
 
 import android.os.Parcelable
+import com.google.firebase.auth.FirebaseAuth
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.activities.SettingsActivity
@@ -16,20 +19,23 @@ import org.wit.hillfort.views.hillfort.HillfortView
 
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
-  fun getHillforts(user: UserModel) {
-    view?.showHillforts(app.hillforts.findAllByUser(user))
+  fun getHillforts() {
+    doAsync {
+//    view?.showHillforts(app.hillforts.findAllByUser(user))
+      val hillforts = app.hillforts.findAll()
+      uiThread {
+        view?.showHillforts(hillforts)
+      }
+    }
   }
-//  fun getHillforts() = app.hillforts.findAll()
 
-  fun doAddHillfort(loggedInUser: UserModel) {
-    var keyArray: Array<String> = arrayOf("loggedInUser")
-    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser)
-    view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
+  fun doAddHillfort() {
+    view?.navigateTo(VIEW.HILLFORT)
   }
 
-  fun doEditHillfort(hillfort: HillfortModel, loggedInUser: UserModel) {
-    var keyArray: Array<String> = arrayOf("loggedInUser", "hillfort_edit")
-    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser, hillfort)
+  fun doEditHillfort(hillfort: HillfortModel) {
+    var keyArray: Array<String> = arrayOf("hillfort_edit")
+    var valueArray: Array<Parcelable?> = arrayOf(hillfort)
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
@@ -44,6 +50,8 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doLogout() {
-    view?.startActivity(view!!.intentFor<LoginActivity>())
+    FirebaseAuth.getInstance().signOut()
+    app.hillforts.clear()
+    view?.navigateTo(VIEW.LOGIN)
   }
 }
