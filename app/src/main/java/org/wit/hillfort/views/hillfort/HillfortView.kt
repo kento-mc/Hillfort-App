@@ -132,8 +132,8 @@ class HillfortView : BaseView(), AnkoLogger {
   }
 
   override fun showLocation(loc: Location) {
-    lat.setText("%.6f".format(hillfort.location.lat))
-    lng.setText("%.6f".format(hillfort.location.lng))
+    lat.setText("%.6f".format(loc.lat))
+    lng.setText("%.6f".format(loc.lng))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
