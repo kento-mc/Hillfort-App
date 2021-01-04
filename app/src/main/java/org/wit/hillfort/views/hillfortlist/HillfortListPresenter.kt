@@ -33,9 +33,9 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.HILLFORT)
   }
 
-  fun doEditHillfort(hillfort: HillfortModel, loggedInUser: UserModel) {
-    var keyArray: Array<String> = arrayOf("loggedInUser", "hillfort_edit")
-    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser, hillfort)
+  fun doEditHillfort(hillfort: HillfortModel) {
+    var keyArray: Array<String> = arrayOf("hillfort_edit")
+    var valueArray: Array<Parcelable?> = arrayOf(hillfort)
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 

@@ -36,13 +36,12 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
-
-    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
-    currentDate = simpleDateFormat.format(Date())
-
     init(toolbarAdd, true)
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
+
+    val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+    currentDate = simpleDateFormat.format(Date())
 
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync {
@@ -172,9 +171,9 @@ class HillfortView : BaseView(), AnkoLogger {
             hillfort.isVisited,
             hillfort.dateVisited)
         }
-      if (hillfort.title.isNotEmpty()) {
-        finish()
-      }
+        if (hillfort.title.isNotEmpty()) {
+          finish()
+        }
       }
       R.id.item_cancel -> {
         presenter.doCancel()

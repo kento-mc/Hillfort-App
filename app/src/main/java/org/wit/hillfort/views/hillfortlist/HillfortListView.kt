@@ -72,7 +72,7 @@ class HillfortListView : BaseView(),
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    presenter.doEditHillfort(hillfort, loggedInUser!!)
+    presenter.doEditHillfort(hillfort)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
