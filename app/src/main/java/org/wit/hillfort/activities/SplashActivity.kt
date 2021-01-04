@@ -4,7 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.google.firebase.auth.FirebaseAuth
 import org.wit.hillfort.R
+import org.wit.hillfort.main.MainApp
+import org.wit.hillfort.models.firebase.HillfortFireStore
+import org.wit.hillfort.views.VIEW
+import org.wit.hillfort.views.hillfortlist.HillfortListView
 import org.wit.hillfort.views.login.LoginView
 
 class SplashActivity : AppCompatActivity() {
@@ -18,9 +23,15 @@ class SplashActivity : AppCompatActivity() {
     Handler().postDelayed({
       // This method will be executed once the timer is over
       // Start your app main activity
-
-      startActivity(Intent(this,LoginView::class.java))
-
+      val app = application as MainApp
+      var fireStore = app.hillforts as HillfortFireStore
+      if (FirebaseAuth.getInstance().currentUser != null) {
+        fireStore!!.fetchHillforts {
+          startActivity(Intent(this, HillfortListView::class.java))
+        }
+      } else {
+        startActivity(Intent(this, LoginView::class.java))
+      }
       // close this activity
       finish()
     }, SPLASH_TIME_OUT)
