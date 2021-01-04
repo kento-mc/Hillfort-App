@@ -28,7 +28,6 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
             view?.navigateTo(VIEW.LIST)
           }
           app.currentUser = auth.currentUser!!
-          view?.navigateTo(VIEW.LIST)
         } else {
           view?.hideProgress()
           view?.navigateTo(VIEW.LIST)
