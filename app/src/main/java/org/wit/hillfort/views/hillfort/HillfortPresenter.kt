@@ -203,10 +203,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             var clipArray: MutableList<String> = ArrayList()
             var i = 0
             while (i < clipData.itemCount) {
-//              // does image already exist in clipArray?
-//              if (!clipArray.contains(clipData.getItemAt(i).uri.toString())) {
-                clipArray.add(clipData.getItemAt(i).uri.toString())
-//              }
+              clipArray.add(clipData.getItemAt(i).uri.toString())
               i++
             }
             if (clipArray.size > 0) {
