@@ -1,18 +1,17 @@
 package org.wit.hillfort.models
 
 import android.os.Parcelable
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
+@TypeConverters
 data class HillfortModel(@PrimaryKey(autoGenerate = true) var id: Long = 0,
                          var fbId : String = "",
                          var title: String = "",
                          var description: String = "",
-                         var contributor: Long = 0,
+                         var contributor: String = "",
                          var isVisited: Boolean = false,
                          var dateVisited: String = "",
 //                         var image: String = "",

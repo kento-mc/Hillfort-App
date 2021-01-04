@@ -79,7 +79,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doAddOrSave(title: String, description: String, id: Long, isVisited: Boolean = false, dateVisited: String = "") {
+  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "") {
     hillfort.title = title
     hillfort.description = description
     hillfort.contributor = id
