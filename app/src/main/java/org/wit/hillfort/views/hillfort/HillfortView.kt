@@ -53,12 +53,6 @@ class HillfortView : BaseView(), AnkoLogger {
       presenter.doConfigureMap(map)
     }
 
-//    if (intent.hasExtra("loggedInUser")) {
-//      loggedInUser = intent.extras?.getParcelable<UserModel>("loggedInUser")!!
-//      info("User:")
-//      info(loggedInUser)
-//    }
-
     chooseImage.setOnClickListener {
       if (presenter.hillfort.images.size == 4 ) {
         toast(R.string.change_hillfort_4_images)
@@ -87,11 +81,6 @@ class HillfortView : BaseView(), AnkoLogger {
       setTempText()
       presenter.doSelectImageFour()
     }
-
-//    hillfortLocation.setOnClickListener {
-//      setTempText()
-//      presenter.doSetLocation()
-//    }
 
     mapView.getMapAsync {
       map = it
@@ -149,8 +138,8 @@ class HillfortView : BaseView(), AnkoLogger {
   }
 
   override fun showLocation(loc: Location) {
-    lat.setText("%.6f".format(loc.lat))
-    lng.setText("%.6f".format(loc.lng))
+    lat.setText("Lat: " + "%.6f".format(loc.lat))
+    lng.setText("Lng: " + "%.6f".format(loc.lng))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
