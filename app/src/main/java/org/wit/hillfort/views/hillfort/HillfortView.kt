@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -105,6 +108,17 @@ class HillfortView : BaseView(), AnkoLogger {
     tempDescription = description.text.toString()
   }
 
+  fun setImageVisability(hillfort: HillfortModel) {
+    val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
+    imageVars.forEachIndexed {index, it ->
+      if (index >= hillfort.images.size) {
+        it.visibility = View.GONE
+      } else {
+        it.visibility = View.VISIBLE
+      }
+    }
+  }
+
   override fun onResume() {
     if (!intent.hasExtra("hillfort_edit")) {
       hillfortTitle.setText(tempTitle)
@@ -131,6 +145,7 @@ class HillfortView : BaseView(), AnkoLogger {
     } else if (hillfort.images.isNotEmpty()) {
       chooseImage.setText(R.string.change_hillfort_image)
     }
+    setImageVisability(hillfort)
   }
 
   override fun showLocation(loc: Location) {
@@ -153,7 +168,7 @@ class HillfortView : BaseView(), AnkoLogger {
     // Hide delete option on first creation of hillfort
     val item: MenuItem = menu.findItem(R.id.item_delete)
     if (!presenter.edit) {
-      item.setVisible(false)
+      item.isVisible = false
     }
     return super.onCreateOptionsMenu(menu)
   }
@@ -169,7 +184,7 @@ class HillfortView : BaseView(), AnkoLogger {
           presenter.doAddOrSave(
             hillfortTitle.text.toString(),
             description.text.toString(),
-            presenter.app.currentUser.uid,
+            FirebaseAuth.getInstance().currentUser!!.uid,
             hillfort.isVisited,
             hillfort.dateVisited)
         }
