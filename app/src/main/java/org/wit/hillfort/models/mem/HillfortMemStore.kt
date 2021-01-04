@@ -57,4 +57,8 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     val foundHillfort: HillfortModel? = hillforts.find { it.id == id }
     return foundHillfort
   }
+
+  override fun clear() {
+    hillforts.clear()
+  }
 }

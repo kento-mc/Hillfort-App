@@ -140,9 +140,9 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
 
-    // Show user in menu bar
-    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(presenter.app.loggedInUser?.userName)
+//    // Show user in menu bar
+//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+//    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
     val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
@@ -168,7 +168,7 @@ class HillfortView : BaseView(), AnkoLogger {
           presenter.doAddOrSave(
             hillfortTitle.text.toString(),
             description.text.toString(),
-            presenter.app.loggedInUser!!.id,
+            presenter.app.currentUser.uid,
             hillfort.isVisited,
             hillfort.dateVisited)
         }
@@ -183,7 +183,6 @@ class HillfortView : BaseView(), AnkoLogger {
         presenter.doDelete()
       }
       R.id.item_logout -> {
-        loggedInUser = null
         startActivity(intentFor<LoginActivity>())
       }
       R.id.item_mark_visited -> {

@@ -11,6 +11,7 @@ import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.hillfortlist.HillfortListView
+import org.wit.hillfort.views.signup.SignupView
 
 class LoginActivity : AppCompatActivity(), AnkoLogger {
 
@@ -46,7 +47,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
     }
 
     createAccountLink.setOnClickListener() {
-      startActivity(intentFor<SignupActivity>())
+      startActivity(intentFor<SignupView>())
     }
   }
 }

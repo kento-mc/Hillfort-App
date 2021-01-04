@@ -34,7 +34,7 @@ class HillfortListView : BaseView(),
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    presenter.getHillforts(loggedInUser!!)
+    presenter.getHillforts()
 //    recyclerView.adapter =
 //      HillfortAdapter(
 //        presenter.getHillforts(
@@ -56,21 +56,17 @@ class HillfortListView : BaseView(),
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
-    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-    menuUser.setTitle(loggedInUser?.userName)
-
+//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
+//    menuUser.setTitle(loggedInUser?.userName)
     return super.onCreateOptionsMenu(menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> presenter.doAddHillfort(loggedInUser!!)
+      R.id.item_add -> presenter.doAddHillfort()
       R.id.item_map -> presenter.doShowHillfortsMap(loggedInUser!!)
       R.id.item_settings -> presenter.doShowSettings(loggedInUser!!)
-      R.id.item_logout -> {
-        loggedInUser = null
-        presenter.doLogout()
-      }
+      R.id.item_logout -> presenter.doLogout()
     }
     return super.onOptionsItemSelected(item)
   }
@@ -89,7 +85,7 @@ class HillfortListView : BaseView(),
 //        ), this
 //      )
 //    recyclerView.adapter?.notifyDataSetChanged()
-    presenter.getHillforts(loggedInUser!!)
+    presenter.getHillforts()
     super.onActivityResult(requestCode, resultCode, data)
   }
 }
