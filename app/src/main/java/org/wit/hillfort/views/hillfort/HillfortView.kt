@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_hillfort.*
@@ -120,7 +121,8 @@ class HillfortView : BaseView(), AnkoLogger {
     val imageVars = arrayOf(hillfortImage, hillfortImage2, hillfortImage3, hillfortImage4)
     var i = 0
     while (i < hillfort.images.size) {
-      imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
+//      imageVars[i].setImageBitmap((readImageFromPath(this, hillfort.images[i])))
+      Glide.with(this).load(hillfort.images[i]).into(imageVars[i])
       i++
     }
     this.showLocation(hillfort.location)
@@ -132,8 +134,8 @@ class HillfortView : BaseView(), AnkoLogger {
   }
 
   override fun showLocation(loc: Location) {
-    lat.setText("%.6f".format(hillfort.location.lat))
-    lng.setText("%.6f".format(hillfort.location.lng))
+    lat.setText("%.6f".format(loc.lat))
+    lng.setText("%.6f".format(loc.lng))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -159,7 +161,7 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item?.itemId) {
       R.id.item_save -> {
-        if (hillfortTitle.toString().isEmpty()) {
+        if (hillfortTitle.text.toString().isEmpty()) {
           toast(R.string.enter_hillfort_title)
         } else {
           info(hillfortTitle.text.toString())
@@ -171,9 +173,9 @@ class HillfortView : BaseView(), AnkoLogger {
             hillfort.isVisited,
             hillfort.dateVisited)
         }
-        if (hillfort.title.isNotEmpty()) {
-          finish()
-        }
+//        if (hillfort.title.isNotEmpty()) {
+//          finish()
+//        }
       }
       R.id.item_cancel -> {
         presenter.doCancel()
