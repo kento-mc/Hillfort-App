@@ -195,32 +195,29 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
       MULTIPLE_IMAGE_REQUEST -> {
         if (data != null) {
           if (data.data != null) { // Is only one image selected?
-            hillfort.images.add(data.data.toString())
+            if (!hillfort.images.contains(data.data.toString())) { // does image already exist in hillfort array?
+              hillfort.images.add(data.data.toString())
+            }
           } else { // Multiple images selected
             var clipData: ClipData = data.clipData!!
             var clipArray: MutableList<String> = ArrayList()
             var i = 0
             while (i < clipData.itemCount) {
-              clipArray.add(clipData.getItemAt(i).uri.toString())
+//              // does image already exist in clipArray?
+//              if (!clipArray.contains(clipData.getItemAt(i).uri.toString())) {
+                clipArray.add(clipData.getItemAt(i).uri.toString())
+//              }
               i++
             }
             if (clipArray.size > 0) {
               if (clipArray.size + hillfort.images.size <= 4) {
                 for (image in clipArray) {
-                  hillfort.images.add(image)
+                  if (!hillfort.images.contains(image)) { // does image already exist in hillfort array?
+                    hillfort.images.add(image)
+                  }
                 }
               } else view?.toast(R.string.too_many_images)
             }
-//            val imageVars = arrayOf(view?.hillfortImage, view?.hillfortImage2, view?.hillfortImage3, view?.hillfortImage4)
-//            i = 0
-//            while (i < hillfort.images.size) {
-//              if (view?.hillfortImage?.drawable == null) { // Check if hillfortImage is already set
-//                imageVars[i]?.setImageBitmap(readImage(view!!, resultCode, data, i))
-//              } else {
-//                imageVars[i+1]?.setImageBitmap(readImage(view!!, resultCode, data, i))
-//              }
-//              i++
-//            }
             view?.info(clipArray)
           }
         }
