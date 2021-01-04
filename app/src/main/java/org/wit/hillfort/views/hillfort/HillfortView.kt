@@ -113,7 +113,7 @@ class HillfortView : BaseView(), AnkoLogger {
       hillfortTitle.setText(tempTitle)
       description.setText(tempDescription)
     }
-    return super.onResume()
+    super.onResume()
     mapView.onResume()
     presenter.doResartLocationUpdates()
   }
