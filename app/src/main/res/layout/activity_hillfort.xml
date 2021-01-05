@@ -37,8 +37,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/appBarLayout"
-                android:layout_alignParentBottom="true"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="-148dp">
 
@@ -58,7 +56,10 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/description" />
+                    app:layout_constraintTop_toBottomOf="@+id/description" >
+
+                    <requestFocus />
+                </Button>
 
                 <EditText
                     android:id="@+id/description"
@@ -93,17 +94,14 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <requestFocus />
-                </EditText>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/lat"
                     android:layout_width="128dp"
                     android:layout_height="22dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginEnd="16dp"
                     android:text="Lat: 00.000000"
                     android:textAlignment="textStart"
@@ -115,8 +113,7 @@
                     android:id="@+id/lng"
                     android:layout_width="128dp"
                     android:layout_height="22dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginEnd="16dp"
                     android:text="Lng: 00.000000"
                     android:textAlignment="textStart"
@@ -124,6 +121,21 @@
                     app:layout_constraintHorizontal_bias="0.483"
                     app:layout_constraintStart_toEndOf="@+id/description"
                     app:layout_constraintTop_toBottomOf="@+id/lat" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="239dp"
+                    android:layout_height="43dp"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:scaleX=".5"
+                    android:scaleY=".5"
+                    android:stepSize="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.535"
+                    app:layout_constraintStart_toEndOf="@+id/hillfortTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/hillfortImage"

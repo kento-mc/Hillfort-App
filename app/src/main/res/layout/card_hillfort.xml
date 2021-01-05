@@ -21,11 +21,12 @@
             android:contentDescription="@string/change_hillfort_image" />
 
         <RatingBar
-            android:id="@+id/rating"
+            android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/ratingBarStyleSmall"
             android:numStars="5"
+            android:rating="0"
             android:stepSize="0.1"
             android:isIndicator="true"
             android:layout_marginTop="75dp"/>

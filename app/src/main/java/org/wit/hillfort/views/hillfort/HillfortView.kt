@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.RatingBar
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -46,11 +47,16 @@ class HillfortView : BaseView(), AnkoLogger {
 
     val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
     currentDate = simpleDateFormat.format(Date())
+    ratingBar.rating = presenter.hillfort.rating.toFloat()
 
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync {
       map = it
       presenter.doConfigureMap(map)
+    }
+
+    ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { p0: RatingBar?, p1: Float, p2: Boolean ->
+      presenter.hillfort.rating = p1.toInt()
     }
 
     chooseImage.setOnClickListener {
@@ -174,8 +180,9 @@ class HillfortView : BaseView(), AnkoLogger {
             hillfortTitle.text.toString(),
             description.text.toString(),
             FirebaseAuth.getInstance().currentUser!!.uid,
-            hillfort.isVisited,
-            hillfort.dateVisited)
+            presenter.hillfort.isVisited,
+            presenter.hillfort.dateVisited,
+            presenter.hillfort.rating)
         }
 //        if (hillfort.title.isNotEmpty()) {
 //          finish()
@@ -193,12 +200,12 @@ class HillfortView : BaseView(), AnkoLogger {
       R.id.item_mark_visited -> {
         if (presenter.hillfort.isVisited) {
           item.isChecked = false
-          hillfort.isVisited = false
-          hillfort.dateVisited = ""
+          presenter.hillfort.isVisited = false
+          presenter.hillfort.dateVisited = ""
         } else {
           item.isChecked = true
-          hillfort.isVisited = true
-          hillfort.dateVisited = currentDate
+          presenter.hillfort.isVisited = true
+          presenter.hillfort.dateVisited = currentDate
         }
       }
     }

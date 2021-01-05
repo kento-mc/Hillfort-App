@@ -81,12 +81,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "") {
+  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "", rating: Int) {
     hillfort.title = title
     hillfort.description = description
     hillfort.contributor = id
     hillfort.isVisited = isVisited
     hillfort.dateVisited = dateVisited
+    hillfort.rating = rating
     doAsync {
       if (edit) {
         app.hillforts.update(hillfort)
