@@ -41,6 +41,7 @@ class HillfortAdapter constructor(
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
+      itemView.ratingBar.rating = hillfort.rating.toFloat()
       if (hillfort.isVisited) {
         itemView.isVisited.text = "Visited on\n" + hillfort.dateVisited
       }

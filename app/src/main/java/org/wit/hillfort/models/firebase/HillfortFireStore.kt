@@ -49,9 +49,11 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
     if (foundHillfort != null) {
       foundHillfort.title = hillfort.title
       foundHillfort.description = hillfort.description
+      foundHillfort.rating = hillfort.rating
       foundHillfort.contributor = hillfort.contributor
       foundHillfort.isVisited = hillfort.isVisited
       foundHillfort.dateVisited = hillfort.dateVisited
+      foundHillfort.favorite = hillfort.favorite
       foundHillfort.images = hillfort.images
       foundHillfort.location = hillfort.location
     }
