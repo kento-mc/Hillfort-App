@@ -29,7 +29,6 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   var defaultLocation = Location(52.245696, -7.139102, 15f)
   var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
   var map: GoogleMap? = null
-  var loggedInUser : UserModel? = null
   var edit = false;
   val locationRequest = createDefaultLocationRequest()
   var locationManualyChanged = false;
@@ -38,9 +37,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   init {
     if (view.intent.hasExtra("hillfort_edit")) {
       edit = true
-//      loggedInUser = view.intent.extras?.getParcelable<UserModel>("loggedInUser")!!
-//
       hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
+      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
       view.showHillfort(hillfort)
     } else {
       if (checkLocationPermissions(view)) {
@@ -81,13 +79,14 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "", rating: Int) {
+  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "", rating: Int, favorite: Boolean = false) {
     hillfort.title = title
     hillfort.description = description
     hillfort.contributor = id
     hillfort.isVisited = isVisited
     hillfort.dateVisited = dateVisited
     hillfort.rating = rating
+    hillfort.favorite = favorite
     doAsync {
       if (edit) {
         app.hillforts.update(hillfort)

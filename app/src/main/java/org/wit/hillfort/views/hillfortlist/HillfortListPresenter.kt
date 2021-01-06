@@ -21,7 +21,6 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun getHillforts() {
     doAsync {
-//    view?.showHillforts(app.hillforts.findAllByUser(user))
       val hillforts = app.hillforts.findAll()
       uiThread {
         view?.showHillforts(hillforts)
@@ -39,14 +38,12 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
-  fun doShowHillfortsMap(loggedInUser: UserModel) {
-    var keyArray: Array<String> = arrayOf("loggedInUser")
-    var valueArray: Array<Parcelable?> = arrayOf(loggedInUser)
+  fun doShowHillfortsMap() {
     view?.navigateTo(VIEW.MAPS)
   }
 
-  fun doShowSettings(loggedInUser: UserModel) {
-    view?.startActivityForResult(view!!.intentFor<SettingsActivity>().putExtra("loggedInUser", loggedInUser), 0)
+  fun doShowSettings() {
+    view?.startActivityForResult(view!!.intentFor<SettingsActivity>(), 0)
   }
 
   fun doLogout() {

@@ -22,14 +22,15 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleSmall"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="75dp"
+            android:isIndicator="true"
             android:numStars="5"
             android:rating="0"
-            android:stepSize="0.1"
-            android:isIndicator="true"
-            android:layout_marginTop="75dp"/>
+            android:stepSize="0.1" />
 
         <TextView
             android:id="@+id/hillfortTitle"
@@ -38,6 +39,15 @@
             android:layout_alignParentTop="true"
             android:textSize="30sp"
             android:layout_toEndOf="@+id/imageIcon" />
+
+        <CheckBox
+            android:id="@+id/favoriteStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            style="?android:attr/starStyle"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/description"
@@ -55,10 +65,10 @@
 
         <TextView
             android:id="@+id/isVisited"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageIcon"
-            android:layout_marginLeft="250dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="55dp"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
