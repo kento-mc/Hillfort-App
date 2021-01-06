@@ -1,4 +1,4 @@
-package org.wit.hillfort.views.hillfortlist
+package org.wit.hillfort.views.favoritelist
 
 import android.os.Parcelable
 import com.google.firebase.auth.FirebaseAuth
@@ -17,19 +17,15 @@ import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.VIEW
 import org.wit.hillfort.views.hillfort.HillfortView
 
-class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
+class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun getHillforts() {
     doAsync {
-      val hillforts = app.hillforts.findAll()
+      val hillforts = app.hillforts.findAll().filter { it.favorite }
       uiThread {
         view?.showHillforts(hillforts)
       }
     }
-  }
-
-  fun doAddHillfort() {
-    view?.navigateTo(VIEW.HILLFORT)
   }
 
   fun doEditHillfort(hillfort: HillfortModel) {
@@ -40,10 +36,6 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doShowHillfortsMap() {
     view?.navigateTo(VIEW.MAPS)
-  }
-
-  fun doShowFavorites() {
-    view?.navigateTo(VIEW.FAV)
   }
 
   fun doShowSettings() {

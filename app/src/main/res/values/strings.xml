@@ -9,6 +9,7 @@
     <string name="menu_savePlacemark">Save</string>
     <string name="menu_markVisited">Visited</string>
     <string name="menu_markFavorite">Favorite</string>
+    <string name="menu_favorites">View Favorites</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_settings">Settings</string>
     <string name="enter_hillfort_title"> Please enter a Hillfort Title </string>

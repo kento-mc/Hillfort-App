@@ -37,6 +37,14 @@
             android:launchMode="singleTop"/>
 
         <activity
+            android:name=".views.favoritelist.FavoriteListView"
+            android:label="@string/title_activity_hillfort_list">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.hillfortlist.HillfortListView" />
+        </activity>
+
+        <activity
             android:name=".views.hillfort.HillfortView"
             android:label="@string/title_activity_hillfort">
             <meta-data

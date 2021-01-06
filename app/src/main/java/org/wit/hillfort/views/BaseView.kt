@@ -10,6 +10,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.favoritelist.FavoriteListView
 import org.wit.hillfort.views.hillfort.HillfortView
 import org.wit.hillfort.views.hillfortlist.HillfortListView
 
@@ -26,7 +27,7 @@ val IMAGE_CHANGE_3 = 5
 val IMAGE_CHANGE_4 = 6
 
 enum class VIEW {
-  LOCATION, HILLFORT, MAPS, LIST, LOGIN, SIGNUP
+  LOCATION, HILLFORT, MAPS, LIST, FAV, LOGIN, SIGNUP
 }
 
 open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
@@ -40,6 +41,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
       VIEW.HILLFORT -> intent = Intent(this, HillfortView::class.java)
       VIEW.MAPS -> intent = Intent(this, HillfortMapView::class.java)
       VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
+      VIEW.FAV -> intent = Intent(this, FavoriteListView::class.java)
       VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
       VIEW.SIGNUP -> intent = Intent(this, SignupView::class.java)
     }
