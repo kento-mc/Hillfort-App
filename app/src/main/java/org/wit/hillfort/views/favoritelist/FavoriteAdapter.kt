@@ -53,9 +53,10 @@ class FavoriteAdapter constructor(
         Glide.with(itemView.context).load(hillfort.images[0]).into(itemView.imageIcon)
       }
       itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
-      itemView.favoriteStar.setOnClickListener {
-        hillfort.favorite = !hillfort.favorite
-      }
+      itemView.favoriteStar.isClickable = false
+//      itemView.favoriteStar.setOnClickListener {
+//        hillfort.favorite = !hillfort.favorite
+//      }
     }
   }
 }
