@@ -13,7 +13,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="MyCheckbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="MyCheckbox">
 <!--        <item name="android:colorControlNormal">#ffd600</item>-->
         <item name="android:colorControlActivated">#ffd600</item>
 <!--        <item name="android:colorControlHighlight">#c51162</item>-->

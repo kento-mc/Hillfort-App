@@ -46,8 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:clickable="true"
+            android:focusable="true"
             style="?android:attr/starStyle"
-            android:focusable="true" />
+            android:theme="@style/MyCheckbox"/>
 
         <TextView
             android:id="@+id/description"
