@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
@@ -159,6 +160,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     map?.addMarker(options)
     map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))
     view?.showHillfort(hillfort)
+  }
+
+  fun doLogout() {
+    FirebaseAuth.getInstance().signOut()
+    app.hillforts.clear()
+    view?.navigateTo(VIEW.LOGIN)
   }
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

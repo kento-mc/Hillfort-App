@@ -27,10 +27,6 @@
 
         <activity android:name=".views.signup.SignupView" />
 
-        <activity android:name=".activities.LoginActivity" />
-
-        <activity android:name=".activities.SignupActivity" />
-
         <activity
             android:name=".views.hillfortlist.HillfortListView"
             android:label="@string/title_activity_hillfort_list"

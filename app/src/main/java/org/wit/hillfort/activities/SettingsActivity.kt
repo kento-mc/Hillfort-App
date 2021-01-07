@@ -19,6 +19,7 @@ import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.login.LoginView
 
 class SettingsActivity : AppCompatActivity(), AnkoLogger {
 
@@ -70,7 +71,7 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
       }
       R.id.item_logout -> {
         loggedInUser = null
-        startActivity(intentFor<LoginActivity>())
+        startActivity(intentFor<LoginView>())
       }
     }
     return super.onOptionsItemSelected(item)

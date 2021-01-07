@@ -6,13 +6,10 @@ import kotlinx.android.synthetic.main.activity_login.password
 import kotlinx.android.synthetic.main.activity_login.toolbarLogin
 import kotlinx.android.synthetic.main.activity_login.userEmail
 import kotlinx.android.synthetic.main.activity_signup.*
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.VIEW
-import org.wit.hillfort.views.login.LoginPresenter
 
 class SignupView : BaseView() {
 

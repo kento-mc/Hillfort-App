@@ -15,7 +15,6 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.views.BaseView
@@ -199,7 +198,7 @@ class HillfortView : BaseView(), AnkoLogger {
         presenter.doDelete()
       }
       R.id.item_logout -> {
-        startActivity(intentFor<LoginActivity>())
+        presenter.doLogout()
       }
       R.id.item_mark_visited -> {
         if (presenter.hillfort.isVisited) {
