@@ -1,16 +1,13 @@
 package org.wit.hillfort.views.hillfort
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.RatingBar
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
@@ -19,11 +16,8 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.activities.LoginActivity
-import org.wit.hillfort.helpers.readImageFromPath
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
-import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +26,6 @@ class HillfortView : BaseView(), AnkoLogger {
 
   lateinit var presenter: HillfortPresenter
   var hillfort = HillfortModel()
-  var loggedInUser : UserModel? = null
   lateinit var map: GoogleMap
   var currentDate: String = ""
   var tempTitle: String = ""
@@ -41,7 +34,18 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
-    init(toolbarAdd, true)
+
+    super.init(toolbarAdd, true)
+
+    mapView.onCreate(savedInstanceState)
+    mapView.getMapAsync {
+      map = it
+      presenter.doConfigureMap(map)
+      it.setOnMapClickListener {
+        setTempText()
+        presenter.doSetLocation()
+      }
+    }
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 
@@ -49,11 +53,10 @@ class HillfortView : BaseView(), AnkoLogger {
     currentDate = simpleDateFormat.format(Date())
     ratingBar.rating = presenter.hillfort.rating.toFloat()
 
-    mapView.onCreate(savedInstanceState);
-    mapView.getMapAsync {
-      map = it
-      presenter.doConfigureMap(map)
-    }
+//    if (intent.hasExtra("hillfort_edit")) {
+//      val hFort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
+//      presenter.app.hillforts.update(presenter.hillfort)
+//    }
 
     ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { p0: RatingBar?, p1: Float, p2: Boolean ->
       presenter.hillfort.rating = p1.toInt()
@@ -88,14 +91,10 @@ class HillfortView : BaseView(), AnkoLogger {
       presenter.doSelectImageFour()
     }
 
-    mapView.getMapAsync {
-      map = it
-      presenter.doConfigureMap(map)
-      it.setOnMapClickListener {
-        setTempText()
-        presenter.doSetLocation()
-      }
-    }
+//    mapView.setOnClickListener {
+//      setTempText()
+//      presenter.doSetLocation()
+//    }
   }
 
   fun setTempText() {
@@ -144,8 +143,8 @@ class HillfortView : BaseView(), AnkoLogger {
   }
 
   override fun showLocation(loc: Location) {
-    lat.setText("Lat: " + "%.6f".format(loc.lat))
-    lng.setText("Lng: " + "%.6f".format(loc.lng))
+    lat.text = "Lat: " + "%.6f".format(loc.lat)
+    lng.text = "Lng: " + "%.6f".format(loc.lng)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -156,9 +155,13 @@ class HillfortView : BaseView(), AnkoLogger {
 //    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
-    val menuCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
-    menuCheck.isCheckable = true
-    if (presenter.hillfort.isVisited) menuCheck.isChecked = true
+    val menuVisCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
+    menuVisCheck.isCheckable = true
+    if (presenter.hillfort.isVisited) menuVisCheck.isChecked = true
+
+    val menuFavCheck: MenuItem = menu?.findItem(R.id.item_mark_favorite)
+    menuFavCheck.isCheckable = true
+    if (presenter.hillfort.favorite) menuFavCheck.isChecked = true
 
     // Hide delete option on first creation of hillfort
     val item: MenuItem = menu.findItem(R.id.item_delete)
@@ -182,7 +185,8 @@ class HillfortView : BaseView(), AnkoLogger {
             FirebaseAuth.getInstance().currentUser!!.uid,
             presenter.hillfort.isVisited,
             presenter.hillfort.dateVisited,
-            presenter.hillfort.rating)
+            presenter.hillfort.rating,
+            presenter.hillfort.favorite)
         }
 //        if (hillfort.title.isNotEmpty()) {
 //          finish()
@@ -206,6 +210,15 @@ class HillfortView : BaseView(), AnkoLogger {
           item.isChecked = true
           presenter.hillfort.isVisited = true
           presenter.hillfort.dateVisited = currentDate
+        }
+      }
+      R.id.item_mark_favorite -> {
+        if (presenter.hillfort.favorite) {
+          item.isChecked = false
+          presenter.hillfort.favorite = false
+        } else {
+          item.isChecked = true
+          presenter.hillfort.favorite = true
         }
       }
     }

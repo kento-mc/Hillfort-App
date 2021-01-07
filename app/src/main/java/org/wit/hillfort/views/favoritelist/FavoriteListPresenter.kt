@@ -1,4 +1,4 @@
-package org.wit.hillfort.views.hillfortlist
+package org.wit.hillfort.views.favoritelist
 
 import android.os.Parcelable
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +9,7 @@ import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.activities.SettingsActivity
+import org.wit.hillfort.helpers.checkLocationPermissions
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
@@ -17,19 +18,15 @@ import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.VIEW
 import org.wit.hillfort.views.hillfort.HillfortView
 
-class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
+class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun getHillforts() {
     doAsync {
-      val hillforts = app.hillforts.findAll()
+      val hillforts = app.hillforts.findAll().filter { it.favorite }
       uiThread {
         view?.showHillforts(hillforts)
       }
     }
-  }
-
-  fun doAddHillfort() {
-    view?.navigateTo(VIEW.HILLFORT)
   }
 
   fun doEditHillfort(hillfort: HillfortModel) {
@@ -39,17 +36,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doShowHillfortsMap() {
-    view?.navigateTo(VIEW.MAPS)
-  }
-
-  fun doShowFavorites() {
-    view?.navigateTo(VIEW.FAV)
-  }
-
-  fun doUpdateFavorite(hillfort: HillfortModel) {
-    doAsync {
-      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
-    }
+    view?.navigateTo(VIEW.FAVMAP)
   }
 
   fun doShowSettings() {

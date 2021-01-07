@@ -37,6 +37,14 @@
             android:launchMode="singleTop"/>
 
         <activity
+            android:name=".views.favoritelist.FavoriteListView"
+            android:label="@string/title_activity_hillfort_list">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.hillfortlist.HillfortListView" />
+        </activity>
+
+        <activity
             android:name=".views.hillfort.HillfortView"
             android:label="@string/title_activity_hillfort">
             <meta-data
@@ -54,6 +62,15 @@
 
         <activity
             android:name=".views.map.HillfortMapView"
+            android:label="@string/title_activity_hillfort_maps"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.hillfortlist.HillfortListView" />
+        </activity>
+
+        <activity
+            android:name=".views.favoritemap.FavoriteMapView"
             android:label="@string/title_activity_hillfort_maps"
             android:launchMode="singleTop">
             <meta-data

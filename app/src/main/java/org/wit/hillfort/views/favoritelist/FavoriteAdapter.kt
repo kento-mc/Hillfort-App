@@ -1,30 +1,22 @@
-package org.wit.hillfort.views.hillfortlist
+package org.wit.hillfort.views.favoritelist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.card_hillfort.view.*
-import org.jetbrains.anko.colorAttr
 import org.wit.hillfort.R
-import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.views.BasePresenter
-import org.wit.hillfort.views.BaseView
-import org.wit.hillfort.views.hillfort.HillfortPresenter
 
-interface HillfortListener {
+interface FavoriteListener {
   fun onHillfortClick(hillfort: HillfortModel)
-  fun onHillfortCheck(hillfort: HillfortModel)
 }
 
-class HillfortAdapter constructor(
+class FavoriteAdapter constructor(
   private var hillforts: List<HillfortModel>,
-  private val listener: HillfortListener
-) : RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
+  private val listener: FavoriteListener
+) : RecyclerView.Adapter<FavoriteAdapter.MainHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
     return MainHolder(
@@ -45,7 +37,7 @@ class HillfortAdapter constructor(
 
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(hillfort: HillfortModel, listener: HillfortListener) {
+    fun bind(hillfort: HillfortModel, listener: FavoriteListener) {
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.ratingBar.rating = hillfort.rating.toFloat()
@@ -61,10 +53,7 @@ class HillfortAdapter constructor(
         Glide.with(itemView.context).load(hillfort.images[0]).into(itemView.imageIcon)
       }
       itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
-      itemView.favoriteStar.setOnClickListener {
-        hillfort.favorite = !hillfort.favorite
-        listener.onHillfortCheck(hillfort)
-      }
+      itemView.favoriteStar.isClickable = false
     }
   }
 }

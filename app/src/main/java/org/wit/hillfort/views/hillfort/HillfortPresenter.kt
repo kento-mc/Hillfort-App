@@ -29,7 +29,6 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   var defaultLocation = Location(52.245696, -7.139102, 15f)
   var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
   var map: GoogleMap? = null
-  var loggedInUser : UserModel? = null
   var edit = false;
   val locationRequest = createDefaultLocationRequest()
   var locationManualyChanged = false;
@@ -38,9 +37,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
   init {
     if (view.intent.hasExtra("hillfort_edit")) {
       edit = true
-//      loggedInUser = view.intent.extras?.getParcelable<UserModel>("loggedInUser")!!
-//
       hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
+//      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
       view.showHillfort(hillfort)
     } else {
       if (checkLocationPermissions(view)) {
@@ -81,13 +79,14 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "", rating: Int) {
+  fun doAddOrSave(title: String, description: String, id: String, isVisited: Boolean = false, dateVisited: String = "", rating: Int, favorite: Boolean = false) {
     hillfort.title = title
     hillfort.description = description
     hillfort.contributor = id
     hillfort.isVisited = isVisited
     hillfort.dateVisited = dateVisited
     hillfort.rating = rating
+    hillfort.favorite = favorite
     doAsync {
       if (edit) {
         app.hillforts.update(hillfort)
@@ -141,18 +140,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doSetLocation() {
     locationManualyChanged = true;
-    var keyArray: Array<String> = arrayOf("location")
-    var valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
-//    if (edit == false) {
-//      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
-//    } else {
-//      view?.navigateTo(
-//        VIEW.LOCATION,
-//        LOCATION_REQUEST,
-//        keyArray,
-//        arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
-//      )
-//    }
+    val keyArray: Array<String> = arrayOf("location")
+    val valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
     view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
   }
 
@@ -165,7 +154,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     hillfort.location = location
     hillfort.location.zoom = 15f
     map?.clear()
-    map?.uiSettings?.setZoomControlsEnabled(true)
+//    map?.uiSettings?.setZoomControlsEnabled(true)
     val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
     map?.addMarker(options)
     map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))

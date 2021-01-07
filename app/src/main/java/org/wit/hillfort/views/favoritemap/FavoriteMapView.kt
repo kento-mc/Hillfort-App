@@ -1,20 +1,25 @@
-package org.wit.hillfort.views.map
+package org.wit.hillfort.views.favoritemap
 
 import android.os.Bundle
+import android.view.Menu
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
+import kotlinx.android.synthetic.main.activity_hillfort_maps.toolbar
 import org.jetbrains.anko.info
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.views.map.HillfortMapPresenter
 
-class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
+class FavoriteMapView : BaseView(), GoogleMap.OnMarkerClickListener {
 
-  lateinit var presenter: HillfortMapPresenter
+  lateinit var presenter: FavoriteMapPresenter
   lateinit var map: GoogleMap
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +27,7 @@ class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
     setContentView(R.layout.activity_hillfort_maps)
     super.init(toolbar, true)
 
-    presenter = initPresenter(HillfortMapPresenter(this)) as HillfortMapPresenter
+    presenter = initPresenter(FavoriteMapPresenter(this)) as FavoriteMapPresenter
 
     mapView.onCreate(savedInstanceState)
     mapView.getMapAsync {
@@ -30,6 +35,15 @@ class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
       map.setOnMarkerClickListener(this)
       presenter.loadHillforts()
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    val user = FirebaseAuth.getInstance().currentUser
+    if (user != null) {
+      toolbar.title = "Favorites: ${user.email}"
+    }
+
+    return super.onCreateOptionsMenu(menu)
   }
 
   override fun showHillfort(hillfort: HillfortModel) {
