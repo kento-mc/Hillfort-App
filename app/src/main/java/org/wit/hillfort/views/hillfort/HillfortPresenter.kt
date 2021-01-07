@@ -38,7 +38,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     if (view.intent.hasExtra("hillfort_edit")) {
       edit = true
       hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
-      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
+//      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
       view.showHillfort(hillfort)
     } else {
       if (checkLocationPermissions(view)) {
@@ -140,18 +140,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doSetLocation() {
     locationManualyChanged = true;
-    var keyArray: Array<String> = arrayOf("location")
-    var valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
-//    if (edit == false) {
-//      view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
-//    } else {
-//      view?.navigateTo(
-//        VIEW.LOCATION,
-//        LOCATION_REQUEST,
-//        keyArray,
-//        arrayOf(Location(hillfort.lat, hillfort.lng, hillfort.zoom))
-//      )
-//    }
+    val keyArray: Array<String> = arrayOf("location")
+    val valueArray: Array<Parcelable?> = arrayOf(Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
     view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, keyArray, valueArray)
   }
 
@@ -164,7 +154,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     hillfort.location = location
     hillfort.location.zoom = 15f
     map?.clear()
-    map?.uiSettings?.setZoomControlsEnabled(true)
+//    map?.uiSettings?.setZoomControlsEnabled(true)
     val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
     map?.addMarker(options)
     map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))

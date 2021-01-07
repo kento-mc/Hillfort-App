@@ -18,6 +18,7 @@ import org.wit.hillfort.views.hillfort.HillfortPresenter
 
 interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)
+  fun onHillfortCheck(hillfort: HillfortModel)
 }
 
 class HillfortAdapter constructor(
@@ -62,6 +63,7 @@ class HillfortAdapter constructor(
       itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
       itemView.favoriteStar.setOnClickListener {
         hillfort.favorite = !hillfort.favorite
+        listener.onHillfortCheck(hillfort)
       }
     }
   }

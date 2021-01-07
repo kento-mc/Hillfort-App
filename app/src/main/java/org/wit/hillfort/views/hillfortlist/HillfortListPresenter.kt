@@ -33,8 +33,8 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doEditHillfort(hillfort: HillfortModel) {
-    var keyArray: Array<String> = arrayOf("hillfort_edit")
-    var valueArray: Array<Parcelable?> = arrayOf(hillfort)
+    val keyArray: Array<String> = arrayOf("hillfort_edit")
+    val valueArray: Array<Parcelable?> = arrayOf(hillfort)
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
@@ -44,6 +44,12 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doShowFavorites() {
     view?.navigateTo(VIEW.FAV)
+  }
+
+  fun doUpdateFavorite(hillfort: HillfortModel) {
+    doAsync {
+      app.hillforts.update(hillfort) // Update before display to account for clicked favoriteStar on card view
+    }
   }
 
   fun doShowSettings() {

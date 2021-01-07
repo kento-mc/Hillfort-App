@@ -38,8 +38,6 @@ class HillfortListView : BaseView(),
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
-//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-//    menuUser.setTitle(loggedInUser?.userName)
     return super.onCreateOptionsMenu(menu)
   }
 
@@ -56,6 +54,10 @@ class HillfortListView : BaseView(),
 
   override fun onHillfortClick(hillfort: HillfortModel) {
     presenter.doEditHillfort(hillfort)
+  }
+
+  override fun onHillfortCheck(hillfort: HillfortModel) {
+    presenter.doUpdateFavorite(hillfort)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

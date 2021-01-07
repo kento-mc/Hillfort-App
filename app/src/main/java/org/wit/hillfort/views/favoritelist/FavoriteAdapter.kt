@@ -54,9 +54,6 @@ class FavoriteAdapter constructor(
       }
       itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
       itemView.favoriteStar.isClickable = false
-//      itemView.favoriteStar.setOnClickListener {
-//        hillfort.favorite = !hillfort.favorite
-//      }
     }
   }
 }

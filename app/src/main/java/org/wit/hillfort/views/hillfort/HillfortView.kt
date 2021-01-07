@@ -18,7 +18,6 @@ import org.wit.hillfort.R
 import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
-import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +26,6 @@ class HillfortView : BaseView(), AnkoLogger {
 
   lateinit var presenter: HillfortPresenter
   var hillfort = HillfortModel()
-  var loggedInUser : UserModel? = null
   lateinit var map: GoogleMap
   var currentDate: String = ""
   var tempTitle: String = ""
@@ -36,7 +34,18 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort)
-    init(toolbarAdd, true)
+
+    super.init(toolbarAdd, true)
+
+    mapView.onCreate(savedInstanceState)
+    mapView.getMapAsync {
+      map = it
+      presenter.doConfigureMap(map)
+      it.setOnMapClickListener {
+        setTempText()
+        presenter.doSetLocation()
+      }
+    }
 
     presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 
@@ -48,12 +57,6 @@ class HillfortView : BaseView(), AnkoLogger {
 //      val hFort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
 //      presenter.app.hillforts.update(presenter.hillfort)
 //    }
-
-    mapView.onCreate(savedInstanceState);
-    mapView.getMapAsync {
-      map = it
-      presenter.doConfigureMap(map)
-    }
 
     ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { p0: RatingBar?, p1: Float, p2: Boolean ->
       presenter.hillfort.rating = p1.toInt()
@@ -88,14 +91,10 @@ class HillfortView : BaseView(), AnkoLogger {
       presenter.doSelectImageFour()
     }
 
-    mapView.getMapAsync {
-      map = it
-      presenter.doConfigureMap(map)
-      it.setOnMapClickListener {
-        setTempText()
-        presenter.doSetLocation()
-      }
-    }
+//    mapView.setOnClickListener {
+//      setTempText()
+//      presenter.doSetLocation()
+//    }
   }
 
   fun setTempText() {

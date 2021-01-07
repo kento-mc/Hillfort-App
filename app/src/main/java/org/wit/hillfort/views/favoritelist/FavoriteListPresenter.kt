@@ -9,6 +9,7 @@ import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.activities.LoginActivity
 import org.wit.hillfort.activities.SettingsActivity
+import org.wit.hillfort.helpers.checkLocationPermissions
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
@@ -29,13 +30,13 @@ class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doEditHillfort(hillfort: HillfortModel) {
-    var keyArray: Array<String> = arrayOf("hillfort_edit")
-    var valueArray: Array<Parcelable?> = arrayOf(hillfort)
+    val keyArray: Array<String> = arrayOf("hillfort_edit")
+    val valueArray: Array<Parcelable?> = arrayOf(hillfort)
     view?.navigateTo(VIEW.HILLFORT, 0, keyArray, valueArray)
   }
 
   fun doShowHillfortsMap() {
-    view?.navigateTo(VIEW.MAPS)
+    view?.navigateTo(VIEW.FAVMAP)
   }
 
   fun doShowSettings() {
