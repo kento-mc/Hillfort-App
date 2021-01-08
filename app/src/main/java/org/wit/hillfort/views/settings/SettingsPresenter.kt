@@ -1,5 +1,6 @@
 package org.wit.hillfort.views.settings
 
+import android.os.Parcelable
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import org.jetbrains.anko.custom.async
@@ -7,6 +8,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import org.wit.hillfort.models.Location
+import org.wit.hillfort.models.Message
 import org.wit.hillfort.models.firebase.HillfortFireStore
 import org.wit.hillfort.views.BasePresenter
 import org.wit.hillfort.views.BaseView
@@ -21,10 +24,12 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
     if (email != "" && password != "") {
       user!!.updateEmail(email!!).addOnCompleteListener(view!!) {
         if (it.isSuccessful) {
-          user!!.updatePassword(password!!).addOnCompleteListener(view!!) {
-            if (it.isSuccessful) {
+          user!!.updatePassword(password!!).addOnCompleteListener(view!!) { task ->
+            if (task.isSuccessful) {
               view?.hideProgress()
-              view?.navigateTo(VIEW.LIST)
+              val keyArray: Array<String> = arrayOf("updateResult")
+              val valueArray: Array<Parcelable?> = arrayOf(Message("Email and password updated successfully"))
+              view?.navigateTo(VIEW.LIST, 0, keyArray, valueArray)
             }
           }
         }
@@ -33,28 +38,26 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
       user!!.updateEmail(email!!).addOnCompleteListener(view!!) {
         if (it.isSuccessful) {
           view?.hideProgress()
-          view?.navigateTo(VIEW.LIST)
+          val keyArray: Array<String> = arrayOf("updateResult")
+          val valueArray: Array<Parcelable?> = arrayOf(Message("Email updated successfully"))
+          view?.navigateTo(VIEW.LIST, 0, keyArray, valueArray)
         }
       }
     } else if (password != "") {
       user!!.updatePassword(password!!).addOnCompleteListener(view!!) {
         if (it.isSuccessful) {
           view?.hideProgress()
-          view?.navigateTo(VIEW.LIST)
+          val keyArray: Array<String> = arrayOf("updateResult")
+          val valueArray: Array<Parcelable?> = arrayOf(Message("Password updated successfully"))
+          view?.navigateTo(VIEW.LIST, 0, keyArray, valueArray)
         }
       }
+    } else {
+      val keyArray: Array<String> = arrayOf("updateResult")
+      val valueArray: Array<Parcelable?> = arrayOf(Message("Update failed"))
+      view?.navigateTo(VIEW.LIST, 0, keyArray, valueArray)
     }
   }
-
-//    if (emailResult && passwordResult) {
-//      returnString = "Email and password updated successfully"
-//    } else if (emailResult) {
-//      returnString = "Email updated successfully"
-//    } else if (passwordResult){
-//      returnString = "Password updated successfully"
-//    } else {
-//      returnString = "Update failed"
-//    }
 
   fun doLogout() {
     FirebaseAuth.getInstance().signOut()

@@ -23,3 +23,6 @@ data class HillfortModel(@PrimaryKey(autoGenerate = true) var id: Long = 0,
 data class Location(var lat: Double = 0.0,
                     var lng: Double = 0.0,
                     var zoom: Float = 0f) : Parcelable
+
+@Parcelize
+data class Message(var message: String = "") : Parcelable

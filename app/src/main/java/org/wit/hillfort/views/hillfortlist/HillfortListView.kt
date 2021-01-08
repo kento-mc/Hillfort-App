@@ -3,15 +3,13 @@ package org.wit.hillfort.views.hillfortlist
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.*
 import org.wit.hillfort.R
+import org.jetbrains.anko.toast
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.models.Message
 import org.wit.hillfort.views.BaseView
 
 class HillfortListView : BaseView(),
@@ -30,6 +28,11 @@ class HillfortListView : BaseView(),
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
     presenter.getHillforts()
+
+    if (intent.hasExtra("updateResult")) {
+      val afterUpdate: String = intent.extras?.getParcelable<Message>("updateResult")!!.message
+      toast(afterUpdate)
+    }
   }
 
   override fun onResume() {
