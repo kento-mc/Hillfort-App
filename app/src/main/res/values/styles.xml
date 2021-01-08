@@ -12,4 +12,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="MyCheckbox">
+<!--        <item name="android:colorControlNormal">#ffd600</item>-->
+        <item name="android:colorControlActivated">#ffd600</item>
+<!--        <item name="android:colorControlHighlight">#c51162</item>-->
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+    </style>
 </resources>

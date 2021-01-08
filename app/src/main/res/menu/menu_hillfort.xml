@@ -8,6 +8,11 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/item_save"
+        android:title="@string/menu_savePlacemark"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/item_cancel"
         android:title="@string/menu_cancelHillfort"
         app:showAsAction="always"/>
@@ -15,6 +20,12 @@
     <item
         android:id="@+id/item_mark_visited"
         android:title="@string/menu_markVisited"
+        app:showAsAction="never"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/item_mark_favorite"
+        android:title="@string/menu_markFavorite"
         app:showAsAction="never"
         android:checkable="true" />
 
