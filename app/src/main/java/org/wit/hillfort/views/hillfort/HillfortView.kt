@@ -113,6 +113,7 @@ class HillfortView : BaseView(), AnkoLogger {
       description.setText(tempDescription)
     }
     super.onResume()
+    toolbarAdd.title = "${title}: ${presenter.app.currentUser.email}"
     mapView.onResume()
     presenter.doResartLocationUpdates()
   }

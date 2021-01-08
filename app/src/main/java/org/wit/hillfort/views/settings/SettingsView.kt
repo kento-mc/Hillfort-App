@@ -16,6 +16,7 @@ import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.views.VIEW
 
 
 class SettingsView : BaseView(), AnkoLogger {
@@ -26,7 +27,7 @@ class SettingsView : BaseView(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_settings)
-    init(toolbar, false)
+    init(toolbar, true)
     progressBar.visibility = View.GONE
 
     setSupportActionBar(toolbar)
@@ -36,10 +37,7 @@ class SettingsView : BaseView(), AnkoLogger {
     userEmail.hint = auth.currentUser?.email
 
     btnUpdate.setOnClickListener() {
-      var onUpdate: String?
-      onUpdate = presenter.doUserUpdate(userEmail.text.toString(), password.text.toString())
-      if (!onUpdate.isNullOrEmpty()) toast(onUpdate)
-//      finish()
+      presenter.doUserUpdate(userEmail.text.toString(), password.text.toString())
     }
 
     val userNum: Int = presenter.app.hillforts.findAll().size

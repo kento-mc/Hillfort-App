@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.*
@@ -29,6 +30,11 @@ class HillfortListView : BaseView(),
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
     presenter.getHillforts()
+  }
+
+  override fun onResume() {
+    super.onResume()
+//    toolbar.title = "${title}: ${presenter.app.currentUser.email}"
   }
 
   override fun showHillforts(hillforts: List<HillfortModel>) {

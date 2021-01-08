@@ -16,51 +16,45 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
 
   var user = FirebaseAuth.getInstance().currentUser
 
-  fun doUserUpdate(email: String? = "", password: String? = ""): String {
+  fun doUserUpdate(email: String? = "", password: String? = "") {
     view?.showProgress()
-    var emailResult = false
-    var passwordResult = false
-    var returnString = ""
-    if (email != "") {
-      emailResult = getEmail(email)
-    }
-    if (password != "") {
-      passwordResult = getPassword(password)
-    }
-    if (emailResult && passwordResult) {
-      returnString = "Email and password updated successfully"
-    } else if (emailResult) {
-      returnString = "Email updated successfully"
-    } else {
-      returnString = "Password updated successfully"
-    }
-    view?.hideProgress()
-    return returnString
-  }
-
-  fun getEmail(email: String?): Boolean {
-    var returnVal = false
-    if (email != "") {
+    if (email != "" && password != "") {
       user!!.updateEmail(email!!).addOnCompleteListener(view!!) {
         if (it.isSuccessful) {
-         returnVal = true
+          user!!.updatePassword(password!!).addOnCompleteListener(view!!) {
+            if (it.isSuccessful) {
+              view?.hideProgress()
+              view?.navigateTo(VIEW.LIST)
+            }
+          }
         }
       }
-    }
-    return returnVal
-  }
-
-  fun getPassword(password: String?): Boolean {
-    var returnVal = false
-    if (password != "") {
+    } else if (email != "") {
+      user!!.updateEmail(email!!).addOnCompleteListener(view!!) {
+        if (it.isSuccessful) {
+          view?.hideProgress()
+          view?.navigateTo(VIEW.LIST)
+        }
+      }
+    } else if (password != "") {
       user!!.updatePassword(password!!).addOnCompleteListener(view!!) {
         if (it.isSuccessful) {
-          returnVal = true
+          view?.hideProgress()
+          view?.navigateTo(VIEW.LIST)
         }
       }
     }
-    return returnVal
   }
+
+//    if (emailResult && passwordResult) {
+//      returnString = "Email and password updated successfully"
+//    } else if (emailResult) {
+//      returnString = "Email updated successfully"
+//    } else if (passwordResult){
+//      returnString = "Password updated successfully"
+//    } else {
+//      returnString = "Update failed"
+//    }
 
   fun doLogout() {
     FirebaseAuth.getInstance().signOut()
