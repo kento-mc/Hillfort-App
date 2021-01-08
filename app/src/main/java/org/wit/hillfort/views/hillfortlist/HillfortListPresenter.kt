@@ -47,7 +47,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doShowSettings() {
-    view?.startActivityForResult(view!!.intentFor<SettingsActivity>(), 0)
+    view?.navigateTo(VIEW.SETTINGS)
   }
 
   fun doLogout() {

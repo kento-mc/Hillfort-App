@@ -25,7 +25,7 @@
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
     <string name="hint_userEmail">Email</string>
-    <string name="hint_userPassword">Password </string>
+    <string name="hint_userPassword">Enter New Password </string>
     <string name="hint_userName">User Name </string>
     <string name="enter_email_password"> Please enter a valid email address/password </string>
     <string name="enter_user_email_password"> Please enter a user name and valid email address/password </string>

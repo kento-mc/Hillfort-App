@@ -89,11 +89,6 @@ class HillfortView : BaseView(), AnkoLogger {
       setTempText()
       presenter.doSelectImageFour()
     }
-
-//    mapView.setOnClickListener {
-//      setTempText()
-//      presenter.doSetLocation()
-//    }
   }
 
   fun setTempText() {
@@ -148,10 +143,6 @@ class HillfortView : BaseView(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
-
-//    // Show user in menu bar
-//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-//    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
     val menuVisCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)

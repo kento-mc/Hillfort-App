@@ -38,8 +38,6 @@ class LoginView : BaseView() {
     }
   }
 
-
-
   override fun showProgress() {
     progressBar.visibility = View.VISIBLE
   }
