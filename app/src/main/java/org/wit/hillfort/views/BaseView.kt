@@ -18,6 +18,7 @@ import org.wit.hillfort.views.hillfortlist.HillfortListView
 import org.wit.hillfort.views.location.EditLocationView
 import org.wit.hillfort.views.login.LoginView
 import org.wit.hillfort.views.map.HillfortMapView
+import org.wit.hillfort.views.settings.SettingsView
 import org.wit.hillfort.views.signup.SignupView
 
 val IMAGE_REQUEST = 1
@@ -28,7 +29,7 @@ val IMAGE_CHANGE_3 = 5
 val IMAGE_CHANGE_4 = 6
 
 enum class VIEW {
-  LOCATION, HILLFORT, MAPS, FAVMAP, LIST, FAV, LOGIN, SIGNUP
+  LOCATION, HILLFORT, MAPS, FAVMAP, LIST, FAV, LOGIN, SIGNUP, SETTINGS
 }
 
 open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
@@ -44,6 +45,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
       VIEW.FAVMAP -> intent = Intent(this, FavoriteMapView::class.java)
       VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
       VIEW.FAV -> intent = Intent(this, FavoriteListView::class.java)
+      VIEW.SETTINGS -> intent = Intent(this, SettingsView::class.java)
       VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
       VIEW.SIGNUP -> intent = Intent(this, SignupView::class.java)
     }

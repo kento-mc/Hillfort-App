@@ -12,8 +12,6 @@ class MainApp : Application(), AnkoLogger {
 
     lateinit var hillforts: HillfortStore
     lateinit var currentUser: FirebaseUser
-    lateinit var users: UserStore
-    lateinit var loggedInUser: UserModel
 
     override fun onCreate() {
         super.onCreate()

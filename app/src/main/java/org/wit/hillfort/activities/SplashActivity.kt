@@ -26,12 +26,15 @@ class SplashActivity : AppCompatActivity() {
       val app = application as MainApp
       var fireStore = app.hillforts as HillfortFireStore
       if (FirebaseAuth.getInstance().currentUser != null) {
+        app.currentUser = FirebaseAuth.getInstance().currentUser!!
         fireStore!!.fetchHillforts {
           startActivity(Intent(this, HillfortListView::class.java))
         }
       } else {
         startActivity(Intent(this, LoginView::class.java))
       }
+//      startActivity(Intent(this, HillfortListView::class.java))
+
       // close this activity
       finish()
     }, SPLASH_TIME_OUT)

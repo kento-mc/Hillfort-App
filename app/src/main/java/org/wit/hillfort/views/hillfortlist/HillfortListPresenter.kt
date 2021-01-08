@@ -3,9 +3,7 @@ package org.wit.hillfort.views.hillfortlist
 import android.os.Parcelable
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.uiThread
-import org.wit.hillfort.activities.SettingsActivity
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BasePresenter
 import org.wit.hillfort.views.BaseView
@@ -47,7 +45,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doShowSettings() {
-    view?.startActivityForResult(view!!.intentFor<SettingsActivity>(), 0)
+    view?.navigateTo(VIEW.SETTINGS)
   }
 
   fun doLogout() {

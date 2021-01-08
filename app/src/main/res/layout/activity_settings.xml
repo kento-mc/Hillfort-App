@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity">
+    tools:context=".views.settings.SettingsView">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,118 +28,12 @@
                 app:titleTextColor="@color/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/appBarLayout"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/settingsUserName"
-                    android:layout_width="243dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:text="@string/settings_userName"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat" />
-
-                <EditText
-                    android:id="@+id/userName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:hint="@string/hint_userName"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/settingsEmail"
-                    android:layout_width="243dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:text="@string/settings_email"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat" />
-
-                <EditText
-                    android:id="@+id/userEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints=""
-                    android:hint="@string/hint_userEmail"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/settingsPassword"
-                    android:layout_width="243dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:text="@string/settings_password"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat" />
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:hint="@string/hint_userPassword"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="@string/settings_buttonUpdate"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-        </ScrollView>
 
         <TextView
             android:id="@+id/statsHillfortsNum"
             android:layout_width="202dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="450dp"
+            android:layout_marginTop="50dp"
             android:gravity="center"
             android:padding="15dp"
             android:text=""
@@ -153,7 +47,7 @@
             android:id="@+id/statsHillfortsVisited"
             android:layout_width="202dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="450dp"
+            android:layout_marginTop="50dp"
             android:gravity="right"
             android:padding="15dp"
             android:text=""
@@ -163,6 +57,151 @@
             android:textStyle="bold"
             tools:ignore="RtlCompat"
             android:layout_toEndOf="@+id/statsHillfortsNum"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+            android:layout_below="@id/appBarLayout"
+            android:layout_marginTop="50dp"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/settingsUserName"-->
+                <!--                    android:layout_width="243dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="0dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:padding="15dp"-->
+                <!--                    android:text="@string/settings_userName"-->
+                <!--                    android:textAlignment="textStart"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="15dp"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    tools:ignore="RtlCompat" />-->
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/userName"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="8dp"-->
+                <!--                    android:hint="@string/hint_userName"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:maxLength="25"-->
+                <!--                    android:maxLines="1"-->
+                <!--                    android:padding="8dp"-->
+                <!--                    android:textColor="@color/colorPrimaryDark"-->
+                <!--                    android:textSize="14sp" />-->
+
+                <TextView
+                    android:id="@+id/settingsEmail"
+                    android:layout_width="243dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:text="@string/settings_email"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:autofillHints=""
+                    android:hint="@string/hint_userEmail"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/settingsPassword"
+                    android:layout_width="243dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:text="@string/settings_password"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/hint_userPassword"
+                    android:inputType="textPassword"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/settings_buttonUpdate"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="196dp"
+                    android:layout_height="96dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="0dp" />
+            </LinearLayout>
+        </ScrollView>
+
+<!--        <TextView-->
+<!--            android:id="@+id/statsHillfortsNum"-->
+<!--            android:layout_width="202dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="450dp"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="15dp"-->
+<!--            android:text=""-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="15dp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:ignore="RtlCompat" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/statsHillfortsVisited"-->
+<!--            android:layout_width="202dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="450dp"-->
+<!--            android:gravity="right"-->
+<!--            android:padding="15dp"-->
+<!--            android:text=""-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="15dp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:ignore="RtlCompat"-->
+<!--            android:layout_toEndOf="@+id/statsHillfortsNum"/>-->
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
@@ -89,11 +88,6 @@ class HillfortView : BaseView(), AnkoLogger {
       setTempText()
       presenter.doSelectImageFour()
     }
-
-//    mapView.setOnClickListener {
-//      setTempText()
-//      presenter.doSetLocation()
-//    }
   }
 
   fun setTempText() {
@@ -118,6 +112,7 @@ class HillfortView : BaseView(), AnkoLogger {
       description.setText(tempDescription)
     }
     super.onResume()
+    toolbarAdd.title = "${title}: ${presenter.app.currentUser.email}"
     mapView.onResume()
     presenter.doResartLocationUpdates()
   }
@@ -148,10 +143,6 @@ class HillfortView : BaseView(), AnkoLogger {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_hillfort, menu)
-
-//    // Show user in menu bar
-//    val menuUser: MenuItem = menu?.findItem(R.id.menu_user)!!
-//    menuUser.setTitle(presenter.app.loggedInUser?.userName)
 
     // Set checkmark status
     val menuVisCheck: MenuItem = menu?.findItem(R.id.item_mark_visited)
