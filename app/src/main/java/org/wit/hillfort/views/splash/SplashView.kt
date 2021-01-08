@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +8,14 @@ import com.google.firebase.auth.FirebaseAuth
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.firebase.HillfortFireStore
-import org.wit.hillfort.views.VIEW
 import org.wit.hillfort.views.hillfortlist.HillfortListView
 import org.wit.hillfort.views.login.LoginView
 
-class SplashActivity : AppCompatActivity() {
+class SplashView : AppCompatActivity() {
 
   // This is the loading time of the splash screen
   private val SPLASH_TIME_OUT: Long = 1000 // 1 sec
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
@@ -33,8 +33,6 @@ class SplashActivity : AppCompatActivity() {
       } else {
         startActivity(Intent(this, LoginView::class.java))
       }
-//      startActivity(Intent(this, HillfortListView::class.java))
-
       // close this activity
       finish()
     }, SPLASH_TIME_OUT)
