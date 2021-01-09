@@ -44,7 +44,7 @@ class HillfortListView : BaseView(),
       override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val adapter = recyclerView.adapter as HillfortAdapter
         adapter.removeAt(viewHolder.adapterPosition)
-
+        deleteFromList((viewHolder.itemView.tag as HillfortModel).fbId)
       }
     }
     val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
@@ -102,5 +102,9 @@ class HillfortListView : BaseView(),
 
   fun checkSwipeRefresh() {
     if (swiperefresh.isRefreshing) swiperefresh.isRefreshing = false
+  }
+
+  fun deleteFromList(fbId: String) {
+    presenter.doDeleteFromList(fbId)
   }
 }

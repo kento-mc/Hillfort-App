@@ -56,6 +56,11 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.SETTINGS)
   }
 
+  fun doDeleteFromList(fbId: String) {
+    val hillfortToDelete = app.hillforts.findByFbId(fbId)
+    app.hillforts.delete(hillfortToDelete!!)
+  }
+
   fun doLogout() {
     FirebaseAuth.getInstance().signOut()
     app.hillforts.clear()

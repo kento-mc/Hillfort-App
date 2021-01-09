@@ -51,6 +51,7 @@ class HillfortAdapter constructor(
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
+      itemView.tag = hillfort
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.ratingBar.rating = hillfort.rating.toFloat()
