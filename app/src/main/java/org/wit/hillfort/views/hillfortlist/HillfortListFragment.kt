@@ -51,8 +51,12 @@ class HillfortListFragment : Fragment(),
 
     root.recyclerView.setLayoutManager(LinearLayoutManager(activity))
     root.recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(),this)
+    getHillforts()
 
     setButtonListener(root)
+
+    itemTouchEditHelper.attachToRecyclerView(root.recyclerView)
+
     return root
   }
 

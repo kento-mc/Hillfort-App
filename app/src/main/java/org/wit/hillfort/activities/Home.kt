@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.nav_header_home.view.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.wit.hillfort.main.MainApp
+import org.wit.hillfort.models.firebase.HillfortFireStore
 import org.wit.hillfort.views.hillfortlist.HillfortListFragment
 
 class Home : AppCompatActivity(),
@@ -32,8 +33,15 @@ class Home : AppCompatActivity(),
     setSupportActionBar(toolbar)
     app = application as MainApp
 
+    var fireStore: HillfortFireStore? = null
 
-    app.currentUser = FirebaseAuth.getInstance().currentUser!!
+    if (app.hillforts is HillfortFireStore) {
+      fireStore = app.hillforts as HillfortFireStore
+    }
+    if (fireStore != null) {
+      fireStore!!.fetchHillforts {}
+    }
+      app.currentUser = FirebaseAuth.getInstance().currentUser!!
 
 
     fab.setOnClickListener { view ->
