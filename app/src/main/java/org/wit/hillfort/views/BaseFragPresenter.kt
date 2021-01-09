@@ -1,0 +1,20 @@
+package org.wit.hillfort.views
+
+import android.content.Intent
+import org.wit.hillfort.activities.Home
+import org.wit.hillfort.main.MainApp
+
+open class BaseFragPresenter(var view: Home?) {
+
+  var app: MainApp =  view?.application as MainApp
+
+  open fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+  }
+
+  open fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+  }
+
+  open fun onDestroy() {
+    view = null
+  }
+}

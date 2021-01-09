@@ -8,4 +8,13 @@
     <color name="black">#000000</color>
     <color name="blue">#3F51B5</color>
     <color name="yellow">#FFEB3B</color>
+
+<!--    fragments-->
+
+    <color name="ic_launcher_homer_background">#FFFFFF</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="grey_100">#2196F3</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_500">#9E9E9E</color>
 </resources>
