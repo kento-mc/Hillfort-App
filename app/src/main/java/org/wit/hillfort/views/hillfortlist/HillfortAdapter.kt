@@ -43,6 +43,11 @@ class HillfortAdapter constructor(
 
   override fun getItemCount(): Int = hillforts.size
 
+  fun removeAt(position: Int) {
+//    hillforts.removeAt(position)
+    notifyItemRemoved(position)
+  }
+
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
