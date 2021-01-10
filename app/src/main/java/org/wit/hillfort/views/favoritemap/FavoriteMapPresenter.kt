@@ -38,7 +38,7 @@ class FavoriteMapPresenter(view: BaseView) : BasePresenter(view){
       val hillforts = app.hillforts.findAll().filter { it.favorite }
       uiThread {
 //        view?.showHillforts(app.hillforts.findAllByUser(app.loggedInUser)) //TODO replace with findALLByUser
-        view?.showHillforts(hillforts)
+        view?.showHillforts(hillforts as ArrayList)
       }
     }
   }

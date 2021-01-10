@@ -7,6 +7,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.HillfortStore
@@ -21,11 +22,11 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
   lateinit var db: DatabaseReference
   lateinit var st: StorageReference
 
-  override fun findAll(): List<HillfortModel> {
+  override fun findAll(): ArrayList<HillfortModel> {
     return hillforts
   }
 
-  override fun findAllByUser(user: UserModel): List<HillfortModel> {
+  override fun findAllByUser(user: UserModel): ArrayList<HillfortModel> {
     return hillforts
   }
 
@@ -72,6 +73,10 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
     hillforts.remove(hillfort)
   }
 
+  override fun deleteFromList(hillfort: HillfortModel) {
+    db.child("users").child(userId).child("hillforts").child(hillfort.fbId).removeValue()
+  }
+
   override fun clear() {
     hillforts.clear()
   }
@@ -81,7 +86,15 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
       override fun onCancelled(dataSnapshot: DatabaseError) {
       }
       override fun onDataChange(dataSnapshot: DataSnapshot) {
+        val keys: ArrayList<String> = ArrayList<String>()
+        dataSnapshot!!.children.forEach {
+          keys.add(it.key.toString())
+        }
         dataSnapshot!!.children.mapNotNullTo(hillforts) { it.getValue<HillfortModel>(HillfortModel::class.java) }
+        hillforts.forEachIndexed { i, it ->
+          if (it.fbId != keys[i]) it.fbId = keys[i]
+          update(it)
+        }
         hillfortsReady()
       }
     }
