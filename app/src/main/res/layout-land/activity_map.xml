@@ -33,7 +33,7 @@
             android:id="@+id/lat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="160dp"
             android:layout_marginTop="68dp"
             android:text="00.000000"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,19 +43,18 @@
             android:id="@+id/lng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="106dp"
             android:layout_marginTop="68dp"
-            android:layout_marginEnd="113dp"
+            android:layout_marginEnd="160dp"
             android:text="00.000000"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintHorizontal_bias="0.985"
             app:layout_constraintStart_toEndOf="@+id/lat"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
-            android:layout_width="354dp"
-            android:layout_height="600dp"
+            android:layout_width="729dp"
+            android:layout_height="255dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
@@ -64,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lat"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.451" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
