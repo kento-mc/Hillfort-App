@@ -41,9 +41,9 @@ class SettingsView : BaseView(), AnkoLogger {
     }
 
     val userNum: Int = presenter.app.hillforts.findAll().size
-    statsHillfortsNum.setText("Hillforts: $userNum")
+    statsHillfortsNum.text = "Hillforts: $userNum"
     val visitedNum: Int = presenter.app.hillforts.findAll().filter { it.isVisited }.size
-    statsHillfortsVisited.setText("Visited: $visitedNum")
+    statsHillfortsVisited.text = "Visited: $visitedNum"
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
