@@ -13,9 +13,10 @@ import org.wit.hillfort.R
 import org.jetbrains.anko.toast
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Message
-import org.wit.hillfort.models.firebase.HillfortFireStore
 import org.wit.hillfort.utils.SwipeToDeleteCallback
+import org.wit.hillfort.utils.SwipeToEditCallback
 import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.views.VIEW
 
 class HillfortListView : BaseView(),
   HillfortListener, AnkoLogger {
@@ -39,6 +40,15 @@ class HillfortListView : BaseView(),
       val afterUpdate: String = intent.extras?.getParcelable<Message>("updateResult")!!.message
       toast(afterUpdate)
     }
+
+    val swipeEditHandler = object : SwipeToEditCallback(this) {
+      override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        val hillfortSwiped = presenter.app.hillforts.findByFbId(viewHolder.itemView.tag as String)
+        onHillfortClick(hillfortSwiped!!)
+      }
+    }
+    val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+    itemTouchEditHelper.attachToRecyclerView(recyclerView)
 
     val swipeDeleteHandler = object : SwipeToDeleteCallback(this) {
       override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
