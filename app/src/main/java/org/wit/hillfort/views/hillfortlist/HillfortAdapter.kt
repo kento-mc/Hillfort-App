@@ -22,7 +22,7 @@ interface HillfortListener {
 }
 
 class HillfortAdapter constructor(
-  private var hillforts: List<HillfortModel>,
+  private var hillforts: ArrayList<HillfortModel>,
   private val listener: HillfortListener
 ) : RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
 
@@ -43,9 +43,15 @@ class HillfortAdapter constructor(
 
   override fun getItemCount(): Int = hillforts.size
 
+  fun removeAt(position: Int) {
+    hillforts.removeAt(position)
+    notifyItemRemoved(position)
+  }
+
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
+      itemView.tag = hillfort.fbId
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.ratingBar.rating = hillfort.rating.toFloat()

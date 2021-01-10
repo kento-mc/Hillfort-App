@@ -53,7 +53,7 @@ class FavoriteMapView : BaseView(), GoogleMap.OnMarkerClickListener {
     Glide.with(this).load(hillfort.images[0]).into(currentImage)
   }
 
-  override fun showHillforts(hillforts: List<HillfortModel>) {
+  override fun showHillforts(hillforts: ArrayList<HillfortModel>) {
     presenter.doPopulateMap(map, hillforts)
   }
 

@@ -27,48 +27,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
-            android:layout_width="371dp"
-            android:layout_height="443dp"
+            android:layout_width="464dp"
+            android:layout_height="301dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.107" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="371dp"
-            android:layout_height="174dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="204dp"
+            android:layout_height="297dp"
+            android:layout_marginStart="350dp"
+            android:layout_marginTop="75dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" >
+            app:layout_constraintHorizontal_bias="0.938"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/cardPreClick"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="115dp"
-                    android:layout_marginTop="75dp"
-                    android:layout_marginEnd="115dp"
-                    android:layout_marginBottom="75dp"
-                    android:text="@string/card_pre_click"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/currentImage"
@@ -77,17 +68,18 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/hillfort_image_placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic"
-                    android:contentDescription="@string/hillfort_image_placeholder" />
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
                 <TextView
                     android:id="@+id/currentTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/hillfort_title_placeholder"
                     app:layout_constraintBottom_toTopOf="@+id/currentDescription"
@@ -95,14 +87,14 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.636" />
+                    app:layout_constraintVertical_bias="0.955" />
 
                 <TextView
                     android:id="@+id/currentDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginBottom="96dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="72dp"
                     android:text="@string/hillfort_description_placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -111,8 +103,8 @@
                     android:id="@+id/lat"
                     android:layout_width="116dp"
                     android:layout_height="18dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="224dp"
                     android:text="00.000000"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -121,13 +113,14 @@
                     android:id="@+id/lng"
                     android:layout_width="117dp"
                     android:layout_height="17dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="124dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="248dp"
                     android:text="00.000000"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

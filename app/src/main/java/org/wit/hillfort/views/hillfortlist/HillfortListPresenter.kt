@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.firebase.HillfortFireStore
 import org.wit.hillfort.views.BasePresenter
 import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.VIEW
@@ -17,6 +18,13 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
       uiThread {
         view?.showHillforts(hillforts)
       }
+    }
+  }
+
+  fun doCheckForUpdates() {
+    val fireStore = app.hillforts as HillfortFireStore
+    fireStore!!.fetchHillforts {
+      getHillforts()
     }
   }
 
@@ -46,6 +54,12 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doShowSettings() {
     view?.navigateTo(VIEW.SETTINGS)
+  }
+
+  fun doDeleteFromList(fbId: String) {
+    val hillfortToDelete = app.hillforts.findByFbId(fbId)
+    app.hillforts.deleteFromList(hillfortToDelete!!)
+//    doCheckForUpdates()
   }
 
   fun doLogout() {

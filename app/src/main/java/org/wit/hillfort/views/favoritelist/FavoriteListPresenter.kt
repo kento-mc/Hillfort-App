@@ -16,7 +16,7 @@ class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
     doAsync {
       val hillforts = app.hillforts.findAll().filter { it.favorite }
       uiThread {
-        view?.showHillforts(hillforts)
+        view?.showHillforts(hillforts as ArrayList)
       }
     }
   }
