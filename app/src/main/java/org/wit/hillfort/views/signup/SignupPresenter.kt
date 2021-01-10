@@ -26,6 +26,7 @@ class SignupPresenter(view: BaseView) : BasePresenter(view) {
           view?.hideProgress()
           view?.navigateTo(VIEW.LIST)
         }
+        app.currentUser = auth.currentUser!!
         view?.hideProgress()
         view?.navigateTo(VIEW.LIST)
       } else {
