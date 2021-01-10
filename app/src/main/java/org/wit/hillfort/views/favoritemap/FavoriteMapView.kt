@@ -2,6 +2,7 @@ package org.wit.hillfort.views.favoritemap
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
@@ -35,6 +36,13 @@ class FavoriteMapView : BaseView(), GoogleMap.OnMarkerClickListener {
       map.setOnMarkerClickListener(this)
       presenter.loadHillforts()
     }
+
+    cardPreClick.visibility = View.VISIBLE
+    currentTitle.visibility = View.GONE
+    currentDescription.visibility = View.GONE
+    currentImage.visibility = View.GONE
+    lat.visibility = View.GONE
+    lng.visibility = View.GONE
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -49,6 +57,8 @@ class FavoriteMapView : BaseView(), GoogleMap.OnMarkerClickListener {
   override fun showHillfort(hillfort: HillfortModel) {
     currentTitle.text = hillfort.title
     currentDescription.text = hillfort.description
+    lat.text = "Lat: ${"%.6f".format(hillfort.location.lat)}"
+    lng.text = "Lng: ${"%.6f".format(hillfort.location.lng)}"
 //    currentImage.setImageBitmap(readImageFromPath(this, hillfort.images[0]))
     Glide.with(this).load(hillfort.images[0]).into(currentImage)
   }
@@ -58,6 +68,12 @@ class FavoriteMapView : BaseView(), GoogleMap.OnMarkerClickListener {
   }
 
   override fun onMarkerClick(marker: Marker): Boolean {
+    cardPreClick.visibility = View.GONE
+    currentTitle.visibility = View.VISIBLE
+    currentDescription.visibility = View.VISIBLE
+    currentImage.visibility = View.VISIBLE
+    lat.visibility = View.VISIBLE
+    lng.visibility = View.VISIBLE
     presenter.doMarkerSelected(marker)
     return true
   }

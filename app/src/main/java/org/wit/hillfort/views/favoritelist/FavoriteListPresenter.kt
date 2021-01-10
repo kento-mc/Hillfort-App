@@ -6,6 +6,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.uiThread
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.firebase.HillfortFireStore
 import org.wit.hillfort.views.BasePresenter
 import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.VIEW
@@ -21,6 +22,13 @@ class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
+  fun doCheckForUpdates() {
+    val fireStore = app.hillforts as HillfortFireStore
+    fireStore!!.fetchHillforts {
+      getHillforts()
+    }
+  }
+
   fun doEditHillfort(hillfort: HillfortModel) {
     val keyArray: Array<String> = arrayOf("hillfort_edit")
     val valueArray: Array<Parcelable?> = arrayOf(hillfort)
@@ -33,6 +41,12 @@ class FavoriteListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doShowSettings() {
     view?.navigateTo(VIEW.SETTINGS)
+  }
+
+  fun doDeleteFromList(fbId: String) {
+    val hillfortToDelete = app.hillforts.findByFbId(fbId)
+    app.hillforts.deleteFromList(hillfortToDelete!!)
+//    doCheckForUpdates()
   }
 
   fun doLogout() {
