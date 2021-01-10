@@ -36,7 +36,7 @@ class FavoriteListView : BaseView(),
     presenter.getHillforts()
   }
 
-  override fun showHillforts(hillforts: List<HillfortModel>) {
+  override fun showHillforts(hillforts: ArrayList<HillfortModel>) {
     recyclerView.adapter = FavoriteAdapter(hillforts, this)
     recyclerView.adapter?.notifyDataSetChanged()
   }
