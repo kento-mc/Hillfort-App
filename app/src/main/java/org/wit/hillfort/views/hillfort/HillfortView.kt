@@ -51,11 +51,6 @@ class HillfortView : BaseView(), AnkoLogger {
     currentDate = simpleDateFormat.format(Date())
     ratingBar.rating = presenter.hillfort.rating.toFloat()
 
-//    if (intent.hasExtra("hillfort_edit")) {
-//      val hFort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
-//      presenter.app.hillforts.update(presenter.hillfort)
-//    }
-
     ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { p0: RatingBar?, p1: Float, p2: Boolean ->
       presenter.hillfort.rating = p1.toInt()
     }

@@ -34,7 +34,7 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
         }
       } else {
         view?.hideProgress()
-        view?.toast("Sign Up Failed: ${task.exception?.message}")
+        view?.toast("Login Failed: ${task.exception?.message}")
       }
     }
   }

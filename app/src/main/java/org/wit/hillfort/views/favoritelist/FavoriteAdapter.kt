@@ -14,7 +14,7 @@ interface FavoriteListener {
 }
 
 class FavoriteAdapter constructor(
-  private var hillforts: List<HillfortModel>,
+  private var hillforts: ArrayList<HillfortModel>,
   private val listener: FavoriteListener
 ) : RecyclerView.Adapter<FavoriteAdapter.MainHolder>() {
 
@@ -35,9 +35,15 @@ class FavoriteAdapter constructor(
 
   override fun getItemCount(): Int = hillforts.size
 
+  fun removeAt(position: Int) {
+    hillforts.removeAt(position)
+    notifyItemRemoved(position)
+  }
+
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(hillfort: HillfortModel, listener: FavoriteListener) {
+      itemView.tag = hillfort.fbId
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.ratingBar.rating = hillfort.rating.toFloat()
