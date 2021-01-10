@@ -1,4 +1,4 @@
 # Hillfort-App
 Android app for logging hillforts
 
-v0.0.3 - Releasing relatively stable version of MVP implementation
+v0.0.4 - Releasing final version
